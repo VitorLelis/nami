@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
 import { Text, View } from '@/components/Themed';
 
-export default function IndexScreen() {
+export default function BudgetScreen() {
   return (
     <View style={styles.container}>
-      <Text>Home</Text>
+      <Text>Budget</Text>
     </View>
   );
 }
