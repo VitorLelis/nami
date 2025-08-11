@@ -1,9 +1,7 @@
-const defaultYellow = '#ffd700';
-
 export default {
     text: '#fff',
     background: '#000',
-    tint: defaultYellow,
     tabIconDefault: '#ccc',
-    tabIconSelected: defaultYellow,
+    subtitle: "#6b7280",
+    defaultYellow: '#FDDE38',
 };

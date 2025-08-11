@@ -1,18 +1,14 @@
-import { StyleSheet } from 'react-native';
-import { Text, View } from '@/components/Themed';
+import ScreenTitle from '@/components/ScreenTitle';
+import BalanceCard from '@/components/BalanceCard';
+import ScreenContainer from '@/components/ScreenContainer';
+
+// Total Balance here
 
 export default function WalletScreen() {
   return (
-    <View style={styles.container}>
-      <Text>Wallets</Text>
-    </View>
+    <ScreenContainer>
+      <ScreenTitle title='Wallets' subtitle='Manage your accounts'/>
+      <BalanceCard totalBalance={2000.55}/>
+    </ScreenContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

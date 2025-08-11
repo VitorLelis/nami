@@ -1,18 +1,15 @@
-import { StyleSheet } from 'react-native';
-import { Text, View } from '@/components/Themed';
+
+import ScreenTitle from '@/components/ScreenTitle';
+import BalanceCard from '@/components/BalanceCard';
+import ScreenContainer from '@/components/ScreenContainer';
+
+//Balance of the month here
 
 export default function IndexScreen() {
   return (
-    <View style={styles.container}>
-      <Text>Home</Text>
-    </View>
+    <ScreenContainer>
+      <ScreenTitle title='Welcome back!' subtitle="Here's your financial overview" />
+      <BalanceCard totalBalance={1000.01}/>
+    </ScreenContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
