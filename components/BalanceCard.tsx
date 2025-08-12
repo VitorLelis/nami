@@ -4,16 +4,16 @@ import { Text, View } from '@/components/Themed';
 import { StyleSheet } from 'react-native';
 
 type Props = {
-  totalBalance: number;
+  balance: number;
 };
 
-export default function BalanceCard({ totalBalance }: Props) {
+export default function BalanceCard({ balance }: Props) {
   return (
     <View style={styles.card}>
       <View style={styles.cardContent}>
-        <Text style={styles.label}>Total Balance</Text>
+        <Text style={styles.label}>Month Balance</Text>
         <Text style={styles.balance}>
-          {totalBalance.toLocaleString()}
+          {balance.toLocaleString()}
         </Text>
       </View>
     </View>

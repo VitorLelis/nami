@@ -1,5 +1,5 @@
 import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome6';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { Tabs } from 'expo-router';
 
 import Colors from '@/constants/Colors';
@@ -7,10 +7,10 @@ import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
+  name: React.ComponentProps<typeof FontAwesome6>['name'];
   color: string;
 }) {
-  return <FontAwesome size={25} style={{ marginBottom: -5, marginTop: 5 }} {...props} />;
+  return <FontAwesome6 size={25} style={{ marginBottom: -5, marginTop: 5 }} {...props} />;
 }
 
 export default function TabLayout() {

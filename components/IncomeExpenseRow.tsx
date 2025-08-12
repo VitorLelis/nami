@@ -1,0 +1,65 @@
+import Colors from '@/constants/Colors';
+import React from 'react';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import { Text, View } from '@/components/Themed';
+import { StyleSheet } from 'react-native';
+
+type Props = {
+  income: number;
+  expense: number;
+};
+
+export default function IncomeExpenseRow({ income, expense }: Props) {
+  return (
+    <View style={styles.rowContainer}>
+      {/* Income Card */}
+      <View style={[styles.card, {marginRight: 10}]}>
+        <View style={styles.cardContent}>
+          <View style={styles.row}>
+            <FontAwesome6 name="circle-arrow-up" size={24} color={Colors.income} />
+            <Text style={[styles.amount, { color: Colors.income }]}>+{income.toLocaleString()}</Text>
+          </View>
+        </View>
+      </View>
+
+      {/* Expense Card */}
+      <View style={[styles.card, {marginLeft: 0}]}>
+        <View style={styles.cardContent}>
+          <View style={styles.row}>
+            <FontAwesome6 name="circle-arrow-down" size={24} color={Colors.expense} />
+            <Text style={[styles.amount, { color: Colors.expense }]}>-{expense.toLocaleString()}</Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  rowContainer: {
+    flexDirection: 'row',
+    marginTop: 16,
+  },
+  card: {
+    flex: 1,
+    borderRadius: 12,
+    overflow: 'hidden',
+    backgroundColor: 'transparent',
+  },
+  cardContent: {
+    padding: 18,
+    backgroundColor: Colors.defaultGray,
+    borderRadius: 12,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.defaultGray,
+  },
+  amount: {
+    fontWeight: '600',
+    backgroundColor: Colors.defaultGray,
+    marginLeft: 28,
+    fontSize: 18,
+  },
+});
