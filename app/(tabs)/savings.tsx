@@ -1,20 +1,10 @@
-import { StyleSheet } from 'react-native';
-import { Text, View } from '@/components/Themed';
 import ScreenTitle from '@/components/ScreenTitle';
+import ScreenContainer from '@/components/ScreenContainer';
 
 export default function SavingsScreen() {
   return (
-    <View style={styles.container}>
+    <ScreenContainer>
       <ScreenTitle title='Saving Goals' subtitle='Track your financial targets'/>
-      <Text>Savings</Text>
-    </View>
+    </ScreenContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

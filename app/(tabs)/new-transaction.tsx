@@ -1,20 +1,10 @@
-import { StyleSheet } from 'react-native';
-import { Text, View } from '@/components/Themed';
 import ScreenTitle from '@/components/ScreenTitle';
+import ScreenContainer from '@/components/ScreenContainer';
 
 export default function NewTransactionScreen() {
   return (
-    <View style={styles.container}>
+    <ScreenContainer>
       <ScreenTitle title='Add Transaction' subtitle='Record your income or expense'/>
-      <Text>New Transaction</Text>
-    </View>
+    </ScreenContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

@@ -1,9 +1,6 @@
-
 import ScreenTitle from '@/components/ScreenTitle';
 import BalanceCard from '@/components/BalanceCard';
 import ScreenContainer from '@/components/ScreenContainer';
-
-//Balance of the month here
 
 export default function IndexScreen() {
   return (
