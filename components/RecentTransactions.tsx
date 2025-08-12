@@ -4,6 +4,7 @@ import { Text, View } from '@/components/Themed';
 import Colors from '@/constants/Colors';
 import Octicons from '@expo/vector-icons/Octicons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import toMoney from '@/utils/toMoney';
 
 type Transaction = {
   id: number;
@@ -44,7 +45,7 @@ export default function RecentTransactions({ recentTransactions }: Props) {
             { color: isIncome ? Colors.income : Colors.expense },
           ]}
         >
-          {item.amount.toLocaleString()}
+          {toMoney(item.amount)}
         </Text>
       </View>
     );

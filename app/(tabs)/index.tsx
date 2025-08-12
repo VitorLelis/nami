@@ -44,7 +44,7 @@ export default function IndexScreen() {
     <ScreenContainer>
       <ScreenTitle title='Welcome back!' subtitle="Here's your financial overview" />
       <BalanceCard balance={10000.01}/>
-      <IncomeExpenseRow income={500} expense={400}/>
+      <IncomeExpenseRow income={500} expense={-400}/>
       <OverviewCards budgets={4} wallets={3} goals={2} />
       <RecentTransactions recentTransactions={dummyTransactions}/>
     </ScreenContainer>

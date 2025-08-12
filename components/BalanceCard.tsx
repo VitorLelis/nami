@@ -2,6 +2,7 @@ import Colors from '@/constants/Colors';
 import React from 'react';
 import { Text, View } from '@/components/Themed';
 import { StyleSheet } from 'react-native';
+import toMoney from '@/utils/toMoney';
 
 type Props = {
   balance: number;
@@ -13,7 +14,7 @@ export default function BalanceCard({ balance }: Props) {
       <View style={styles.cardContent}>
         <Text style={styles.label}>Month Balance</Text>
         <Text style={styles.balance}>
-          {balance.toLocaleString()}
+          {toMoney(balance)}
         </Text>
       </View>
     </View>

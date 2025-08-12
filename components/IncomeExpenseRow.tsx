@@ -3,6 +3,7 @@ import React from 'react';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { Text, View } from '@/components/Themed';
 import { StyleSheet } from 'react-native';
+import toMoney from '@/utils/toMoney';
 
 type Props = {
   income: number;
@@ -17,7 +18,7 @@ export default function IncomeExpenseRow({ income, expense }: Props) {
         <View style={styles.cardContent}>
           <View style={styles.row}>
             <FontAwesome6 name="circle-arrow-up" size={24} color={Colors.income} />
-            <Text style={[styles.amount, { color: Colors.income }]}>+{income.toLocaleString()}</Text>
+            <Text style={[styles.amount, { color: Colors.income }]}>{toMoney(income)}</Text>
           </View>
         </View>
       </View>
@@ -27,7 +28,7 @@ export default function IncomeExpenseRow({ income, expense }: Props) {
         <View style={styles.cardContent}>
           <View style={styles.row}>
             <FontAwesome6 name="circle-arrow-down" size={24} color={Colors.expense} />
-            <Text style={[styles.amount, { color: Colors.expense }]}>-{expense.toLocaleString()}</Text>
+            <Text style={[styles.amount, { color: Colors.expense }]}>{toMoney(expense)}</Text>
           </View>
         </View>
       </View>
