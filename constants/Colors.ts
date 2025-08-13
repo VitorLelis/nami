@@ -1,7 +1,7 @@
 export default {
     text: '#fff',
     background: '#000',
-    tabIconDefault: '#ccc',
+    lightGray: '#ccc',
     defaultGray: "#363940",
     defaultYellow: '#FDDE38',
     income: "#1A9447",

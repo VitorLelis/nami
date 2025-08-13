@@ -2,8 +2,7 @@ import React from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import Colors from '@/constants/Colors';
-import Octicons from '@expo/vector-icons/Octicons';
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import {Octicons, FontAwesome6} from '@expo/vector-icons';
 import toMoney from '@/utils/toMoney';
 
 type Transaction = {
@@ -19,7 +18,7 @@ type Props = {
 
 export default function RecentTransactions({ recentTransactions }: Props) {
   const renderItem = ({ item }: { item: Transaction }) => {
-    const isIncome = item.amount > 0;
+    const isIncome = item.amount >= 0;
 
     return (
       <View style={styles.transactionRow}>
