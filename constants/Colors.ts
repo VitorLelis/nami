@@ -6,5 +6,9 @@ export default {
     defaultYellow: '#FDDE38',
     income: "#1A9447",
     subtitle: "#6b7280",
-    expense: "#f03f33"
+    expense: "#f03f33",
+    safe:"#10B981",
+    warning: "#F59E0B",
+    excess: "#EF4444",
+    progessBar: "#292b30"
 };

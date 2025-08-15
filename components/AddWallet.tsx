@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor:Colors.defaultYellow
   },
   text: {
     fontSize: 14,
