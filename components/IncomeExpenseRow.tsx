@@ -45,21 +45,18 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 12,
     overflow: 'hidden',
-    backgroundColor: 'transparent',
+    backgroundColor: Colors.defaultGray,
   },
   cardContent: {
     padding: 18,
-    backgroundColor: Colors.defaultGray,
     borderRadius: 12,
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.defaultGray,
   },
   amount: {
     fontWeight: '600',
-    backgroundColor: Colors.defaultGray,
     marginLeft: 28,
     fontSize: 18,
   },

@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 12,
-    backgroundColor: Colors.defaultGray,
   },
   title: {
     fontSize: 20,
@@ -54,7 +53,6 @@ const styles = StyleSheet.create({
   dividerContainer: {
     marginTop: 8,
     alignItems: 'center',
-    backgroundColor: Colors.defaultGray,
   },
   label: {
     fontSize: 12,
@@ -62,7 +60,7 @@ const styles = StyleSheet.create({
     color: Colors.lightGray
   },
   netWorth: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: '600',
   },
 });

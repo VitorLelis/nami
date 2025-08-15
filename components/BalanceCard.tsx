@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     opacity: 0.8,
     marginBottom: 4,
+    fontWeight: '700',
     color: Colors.background,
   },
   balance: {

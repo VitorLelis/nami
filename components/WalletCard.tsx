@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
   },
   right: {
     alignItems: 'flex-end',
-    backgroundColor: Colors.defaultGray
   },
   amount: {
     fontSize: 16,

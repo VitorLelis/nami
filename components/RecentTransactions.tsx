@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 18,
-    backgroundColor: Colors.defaultGray,
   },
   headerTitle: {
     fontSize: 16,
@@ -91,27 +90,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: Colors.defaultGray,
   },
   leftSide: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.defaultGray,
   },
   iconContainer: {
     padding: 6,
     marginRight: 6,
-    backgroundColor: Colors.defaultGray,
   },
   description: {
     fontWeight: '500',
     fontSize: 14,
-    backgroundColor: Colors.defaultGray,
   },
   date: {
     fontSize: 12,
-    color: Colors.subtitle,
-    backgroundColor: Colors.defaultGray,
+    color: Colors.lightGray,
   },
   amount: {
     fontWeight: '600',
@@ -119,6 +113,5 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: 12,
-    backgroundColor: Colors.defaultGray,
   },
 });
