@@ -4,49 +4,66 @@ import ScreenContainer from '@/components/ScreenContainer';
 import IncomeExpenseRow from '@/components/IncomeExpenseRow';
 import OverviewCards from '@/components/OverviewCards';
 import RecentTransactions from '@/components/RecentTransactions';
-
-const dummyTransactions = [
-  {
-    id: 1,
-    description: 'Monthly Salary',
-    date: '2025-08-01',
-    amount: 3500,
-  },
-  {
-    id: 2,
-    description: 'Groceries at Supermarket',
-    date: '2025-08-03',
-    amount: -150,
-  },
-  {
-    id: 3,
-    description: 'Electricity Bill',
-    date: '2025-08-05',
-    amount: -75,
-  },
-  {
-    id: 4,
-    description: 'Freelance Project',
-    date: '2025-08-07',
-    amount: 500.65,
-  },
-  {
-    id: 5,
-    description: 'Dinner Out',
-    date: '2025-08-09',
-    amount: -60,
-  },
-];
+import { useEffect, useState } from 'react';
+import { Alert } from 'react-native';
+import { Transaction, useDatabase } from '@/db/useDatabase';
 
 
 export default function IndexScreen() {
+  const [monthBalance,setMonthBalance] = useState(0);
+  const [monthIncome,setMonthIncome] = useState(0);
+  const [monthExpense,setMonthExpense] = useState(0);
+  const [budgetCount,setBudgetCount] = useState(0);
+  const [walletCount,setWalletCount] = useState(0);
+  const [savingsCount,setSavingsCount] = useState(0);
+  const [recentTransactions,setRecentTransactions] = useState<Transaction[]>([])
+
+  const db = useDatabase();
+
+  const handleTransactions = (trs: Transaction[]) => {
+    setRecentTransactions(trs.slice(0,5))
+
+    let income = 0;
+    let expense = 0;
+
+    for (let t of trs){
+      t.value >= 0 ? income += t.value : expense += t.value;
+    }
+
+    setMonthBalance(income+expense)
+    setMonthIncome(income)
+    setMonthExpense(expense)
+  }
+
+  async function getVariables() {
+    try {
+      const monthTransactions = await db.getMonthTransactions();
+      const budgetResponse = await db.getBudgetCount();
+      const walletResponse = await db.getWalletCount();
+      const savingResponse = await db.getSavingsCount();
+
+      setBudgetCount(budgetResponse)
+      setWalletCount(walletResponse)
+      setSavingsCount(savingResponse)
+
+      handleTransactions(monthTransactions)
+    } 
+    catch (error) {
+      Alert.alert('Error', String(error));
+    }
+  }
+
+  useEffect(() => {
+    getVariables();
+  }, []);
+  
   return (
     <ScreenContainer>
       <ScreenTitle title='Welcome back!' subtitle="Here's your financial overview" />
-      <BalanceCard balance={10000.01}/>
-      <IncomeExpenseRow income={500} expense={-400}/>
-      <OverviewCards budgets={4} wallets={3} goals={2} />
-      <RecentTransactions recentTransactions={dummyTransactions}/>
+      <BalanceCard balance={monthBalance}/>
+      <IncomeExpenseRow income={monthIncome} expense={monthExpense}/>
+      <OverviewCards budgets={budgetCount} wallets={walletCount} goals={savingsCount} />
+      <RecentTransactions recentTransactions={recentTransactions}/>
     </ScreenContainer>
   );
 }

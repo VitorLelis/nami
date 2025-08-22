@@ -4,13 +4,7 @@ import { Text, View } from '@/components/Themed';
 import Colors from '@/constants/Colors';
 import {Octicons, FontAwesome6} from '@expo/vector-icons';
 import toMoney from '@/utils/toMoney';
-
-type Transaction = {
-  id: number;
-  description: string;
-  date: string;
-  amount: number;
-};
+import { Transaction } from '@/db/useDatabase';
 
 type Props = {
   recentTransactions: Transaction[];
@@ -18,7 +12,7 @@ type Props = {
 
 export default function RecentTransactions({ recentTransactions }: Props) {
   const renderItem = ({ item }: { item: Transaction }) => {
-    const isIncome = item.amount >= 0;
+    const isIncome = item.value >= 0;
 
     return (
       <View style={styles.transactionRow}>
@@ -32,7 +26,7 @@ export default function RecentTransactions({ recentTransactions }: Props) {
             )}
           </View>
           <View>
-            <Text style={styles.description}>{item.description}</Text>
+            <Text style={styles.description}>{item.desc}</Text>
             <Text style={styles.date}>{item.date}</Text>
           </View>
         </View>
@@ -44,7 +38,7 @@ export default function RecentTransactions({ recentTransactions }: Props) {
             { color: isIncome ? Colors.income : Colors.expense },
           ]}
         >
-          {toMoney(item.amount)}
+          {toMoney(item.value)}
         </Text>
       </View>
     );
