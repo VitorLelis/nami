@@ -4,16 +4,16 @@ import { Text, View } from '@/components/Themed';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Colors from '@/constants/Colors';
 
-export default function AddWallet() {
+export default function TransferMoneyButton() {
   const handlePress = () => {
-    Alert.alert('Add Wallet', 'This will open the add wallet option');
+    Alert.alert('Transfer Money', 'This will take to money transfer');
   };
 
   return (
     <Pressable style={styles.card} onPress={handlePress}>
       <View style={styles.content}>
-        <FontAwesome6 name="plus" size={14} color={Colors.background} />
-        <Text style={styles.text}>Add Wallet</Text>
+        <FontAwesome6 name="arrow-right-arrow-left" size={14} color={Colors.background} />
+        <Text style={styles.text}>Transfer Money</Text>
       </View>
     </Pressable>
   );
@@ -22,7 +22,7 @@ export default function AddWallet() {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: Colors.defaultYellow,
-    borderRadius: 14,
+    borderRadius: 12,
     padding: 14,
     marginTop: 14
   },

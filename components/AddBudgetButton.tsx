@@ -4,16 +4,16 @@ import { Text, View } from '@/components/Themed';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Colors from '@/constants/Colors';
 
-export default function AddSaving() {
-  const handlePress = () => {
-    Alert.alert('Add Saving', 'This will open the add goal option');
-  };
+interface Props{
+  onPress: () => void
+}
 
+export default function AddBudgetButton({onPress}: Props) {
   return (
-    <Pressable style={styles.card} onPress={handlePress}>
+    <Pressable style={styles.card} onPress={onPress}>
       <View style={styles.content}>
         <FontAwesome6 name="plus" size={14} color={Colors.background} />
-        <Text style={styles.text}>Add Saving Goal</Text>
+        <Text style={styles.text}>Add Budget</Text>
       </View>
     </Pressable>
   );
@@ -22,7 +22,7 @@ export default function AddSaving() {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: Colors.defaultYellow,
-    borderRadius: 14,
+    borderRadius: 12,
     padding: 14,
     marginTop: 14,
     marginBottom: 16,

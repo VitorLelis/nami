@@ -7,6 +7,8 @@ import RecentTransactions from '@/components/RecentTransactions';
 import { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { Transaction, useDatabase } from '@/db/useDatabase';
+import { useFocusEffect } from 'expo-router';
+import React from 'react';
 
 
 export default function IndexScreen() {
@@ -37,7 +39,7 @@ export default function IndexScreen() {
 
   async function getVariables() {
     try {
-      const monthTransactions = await db.getMonthTransactions();
+      //const monthTransactions = await db.getMonthTransactions();
       const budgetResponse = await db.getBudgetCount();
       const walletResponse = await db.getWalletCount();
       const savingResponse = await db.getSavingsCount();
@@ -46,7 +48,7 @@ export default function IndexScreen() {
       setWalletCount(walletResponse)
       setSavingsCount(savingResponse)
 
-      handleTransactions(monthTransactions)
+      //handleTransactions(monthTransactions)
     } 
     catch (error) {
       Alert.alert('Error', String(error));
@@ -56,6 +58,12 @@ export default function IndexScreen() {
   useEffect(() => {
     getVariables();
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getVariables();
+    }, []),
+  );
   
   return (
     <ScreenContainer>

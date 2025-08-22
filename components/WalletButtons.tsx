@@ -1,17 +1,20 @@
 import React from 'react';
 import { View } from '@/components/Themed';
-import AddWallet from './AddWallet';
-import TransferMoney from './TransferMoney';
+import AddWalletButton from './AddWalletButton';
+import TransferMoneyButton from './TransferMoneyButton';
 
+interface Props{
+  walletPress: () => void;
+}
 
-export default function WalletButtons() {
+export default function WalletButtons({walletPress}:Props) {
   return (
     <View style={{flexDirection: 'row', paddingBottom: 16}}>
       <View style={{flex:1, marginRight: 8}}>
-        <AddWallet/>
+        <AddWalletButton onPress={walletPress}/>
       </View>
       <View style={{flex: 1}}>
-        <TransferMoney/>
+        <TransferMoneyButton/>
       </View>
     </View>
   );

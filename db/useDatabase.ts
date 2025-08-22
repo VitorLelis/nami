@@ -9,10 +9,15 @@ export type Transaction = {
     tag_name: string;
 }
 
+export type Wallet = {
+    id: number;
+    name: string
+}
+
 export function useDatabase(){
     const db = useSQLiteContext();
 
-    async function getMonthTransactions(): Promise<Transaction[]> {
+    /*async function getMonthTransactions(): Promise<Transaction[]> {
         const now = new Date();
         const year = now.getFullYear();
         const month = String(now.getMonth() + 1).padStart(2, '0');
@@ -33,7 +38,7 @@ export function useDatabase(){
         } catch (error) {
           throw error;
         }
-    }
+    }*/
 
     async function getBudgetCount(): Promise<number> {
         const query = 'SELECT COUNT(*) AS budget_count FROM budgets';
@@ -65,11 +70,75 @@ export function useDatabase(){
         }
     }
 
+    async function addWallet(name:string) {
+        const query = await db.prepareAsync(
+          'INSERT INTO wallets (name) VALUES (?)',
+        );
+
+        try {
+          const result = await query.executeAsync(name);
+
+          const insertedRowId = result.lastInsertRowId;
+
+          return { insertedRowId };
+        } 
+        catch (error) {
+          throw error;
+        } 
+        finally {
+          await query.finalizeAsync();
+        }
+    }
+
+    async function addTag(name:string) {
+        const query = await db.prepareAsync(
+          'INSERT INTO tags (name) VALUES (?)',
+        );
+
+        try {
+          const result = await query.executeAsync(name);
+
+          const insertedRowId = result.lastInsertRowId;
+
+          return { insertedRowId };
+        } 
+        catch (error) {
+          throw error;
+        } 
+        finally {
+          await query.finalizeAsync();
+        }
+    }
+
+    async function addBudget(tag_id: number,limit_amount:number) {
+      const query =
+        'INSERT INTO budgets (tag_id,limit_amount) VALUES (?,?)';
+      try {
+        await db.getAllAsync(query, [tag_id,limit_amount]);
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    async function addSaving(tag_id: number,goal:number) {
+      const query =
+        'INSERT INTO savings (tag_id,goal) VALUES (?,?)';
+      try {
+        await db.getAllAsync(query, [tag_id,goal]);
+      } catch (error) {
+        throw error;
+      }
+    }
+
     return {
-        getMonthTransactions,
+        //getMonthTransactions,
         getBudgetCount,
         getWalletCount,
         getSavingsCount,
+        addWallet,
+        addTag,
+        addBudget,
+        addSaving,
     };
 
 }
