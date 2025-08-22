@@ -8,7 +8,6 @@ import { Budget, useDatabase } from '@/db/useDatabase';
 import { useFocusEffect } from 'expo-router';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { Text } from '@/components/Themed';
 
 export default function BudgetScreen() {
   const [addBudgetVisible,setAddBudgetVisible] = useState(false);
