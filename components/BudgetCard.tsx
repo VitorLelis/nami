@@ -12,7 +12,7 @@ type BudgetCardProps = {
 
 export default function BudgetCard({ name, spent,limit }: BudgetCardProps) {
   const isOverBudget = spent > limit;
-  const percentage = (spent / limit) * 100
+  const percentage = limit != 0? (spent / limit) * 100 : 100 // avoid division by zero
 
   return (
     <View style={styles.card}>

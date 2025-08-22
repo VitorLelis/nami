@@ -25,6 +25,13 @@ export type WalletBalance = {
   balance: number;
 }
 
+export type Budget = {
+  id: number;
+  limit_amount: number;
+  tag: string;
+  spent: number;
+}
+
 export function useDatabase(){
     const db = useSQLiteContext();
 
@@ -143,14 +150,35 @@ export function useDatabase(){
 
     async function getWalletBalanceList() {
       const query = `
-          SELECT w.id, w.name, IFNULL(SUM(t.value),0) as balance
+          SELECT w.id, w.name, IFNULL(SUM(t.value),0) AS balance
           FROM wallets w
           LEFT JOIN transactions t ON t.wallet_id = w.id
           GROUP BY w.id, w.name
+          ORDER BY w.id
         `;
 
         try {
           const rows = await db.getAllAsync<WalletBalance>(query);
+          return rows;
+        } catch (error) {
+          throw error;
+        }
+    }
+
+    async function getBudgetList() {
+      const query = `
+          SELECT b.id, b.limit_amount, g.name AS tag, IFNULL(SUM(t.value),0) AS spent
+          FROM budgets b
+          JOIN tags g ON b.tag_id = g.id
+          LEFT JOIN transactions t 
+                    ON t.tag_id = b.tag_id
+                    AND strftime('%Y-%m', t.date) = strftime('%Y-%m', 'now') 
+          GROUP BY b.id, b.limit_amount, g.name
+          ORDER BY b.id
+        `;
+
+        try {
+          const rows = await db.getAllAsync<Budget>(query);
           return rows;
         } catch (error) {
           throw error;
@@ -166,7 +194,8 @@ export function useDatabase(){
         addTag,
         addBudget,
         addSaving,
-        getWalletBalanceList
+        getWalletBalanceList,
+        getBudgetList,
     };
 
 }

@@ -20,7 +20,7 @@ export default function WalletScreen() {
     const wallets = await db.getWalletBalanceList();
     setWalletList(wallets)
 
-    const sum: number = walletList.reduce(
+    const sum: number = wallets.reduce(
       (acc:number,current:WalletBalance) => acc + current.balance,0)
     
     setTotalBalance(sum)
