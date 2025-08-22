@@ -52,6 +52,8 @@ export default function RecentTransactions({ recentTransactions }: Props) {
         <Text style={styles.headerTitle}>Recent Transactions</Text>
       </View>
 
+      {recentTransactions.length === 0 && <Text style={styles.noRecent}>No transactions yet</Text>}
+
       {/* Transactions list */}
       <FlatList
         data={recentTransactions}
@@ -108,4 +110,7 @@ const styles = StyleSheet.create({
   separator: {
     height: 12,
   },
+  noRecent:{
+    padding: 16,
+  }
 });
