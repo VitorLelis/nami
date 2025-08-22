@@ -14,6 +14,17 @@ export type Wallet = {
     name: string
 }
 
+export type Tag = {
+  id: number;
+  name: string;
+}
+
+export type WalletBalance = {
+  id: number;
+  name: string;
+  balance: number;
+}
+
 export function useDatabase(){
     const db = useSQLiteContext();
 
@@ -28,7 +39,7 @@ export function useDatabase(){
           FROM transactions t
           LEFT JOIN wallets w ON t.wallet_id = w.id
           LEFT JOIN tags g ON t.tag_id = g.id
-          WHERE strftime('%Y-%m', t.date) = ?
+          WHERE strftime('%Y-%m', t.date) = ? //strftime('%Y-%m', 'now')
           ORDER BY t.date DESC;
         `;
 
@@ -43,8 +54,8 @@ export function useDatabase(){
     async function getBudgetCount(): Promise<number> {
         const query = 'SELECT COUNT(*) AS budget_count FROM budgets';
         try {
-          const response = await db.getAllAsync<{ budget_count: number }>(query);
-          return response[0].budget_count;
+          const response = await db.getFirstAsync<{ budget_count: number }>(query);
+          return response!.budget_count;
         } catch (error) {
           throw error;
         }
@@ -53,8 +64,8 @@ export function useDatabase(){
     async function getWalletCount(): Promise<number> {
         const query = 'SELECT COUNT(*) AS wallet_count FROM wallets';
         try {
-          const response = await db.getAllAsync<{ wallet_count: number }>(query);
-          return response[0].wallet_count;
+          const response = await db.getFirstAsync<{ wallet_count: number }>(query);
+          return response!.wallet_count;
         } catch (error) {
           throw error;
         }
@@ -63,8 +74,8 @@ export function useDatabase(){
     async function getSavingsCount(): Promise<number> {
         const query = 'SELECT COUNT(*) AS saving_count FROM savings';
         try {
-          const response = await db.getAllAsync<{saving_count: number }>(query);
-          return response[0].saving_count;
+          const response = await db.getFirstAsync<{saving_count: number }>(query);
+          return response!.saving_count;
         } catch (error) {
           throw error;
         }
@@ -130,6 +141,22 @@ export function useDatabase(){
       }
     }
 
+    async function getWalletBalanceList() {
+      const query = `
+          SELECT w.id, w.name, IFNULL(SUM(t.value),0) as balance
+          FROM wallets w
+          LEFT JOIN transactions t ON t.wallet_id = w.id
+          GROUP BY w.id, w.name
+        `;
+
+        try {
+          const rows = await db.getAllAsync<WalletBalance>(query);
+          return rows;
+        } catch (error) {
+          throw error;
+        }
+    }
+
     return {
         //getMonthTransactions,
         getBudgetCount,
@@ -139,6 +166,7 @@ export function useDatabase(){
         addTag,
         addBudget,
         addSaving,
+        getWalletBalanceList
     };
 
 }

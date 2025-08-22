@@ -1,10 +1,10 @@
 import React from 'react';
 import { Alert, FlatList, Pressable, StyleSheet } from 'react-native';
 import WalletCard from './WalletCard';
-import { Wallet } from '@/db/useDatabase';
+import { WalletBalance } from '@/db/useDatabase';
 
 type WalletListProps = {
-  wallets: Wallet[];
+  wallets: WalletBalance[];
 };
 
 export default function WalletList({ wallets }: WalletListProps) {
@@ -14,7 +14,7 @@ export default function WalletList({ wallets }: WalletListProps) {
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
         <Pressable onPress={() => Alert.alert('View Wallet', `${item.id}-> ${item.name}`)}>
-          <WalletCard name={item.name} amount={0} />
+          <WalletCard name={item.name} amount={item.balance} />
         </Pressable>
         
       )}
