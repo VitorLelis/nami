@@ -39,7 +39,7 @@ export default function IndexScreen() {
 
   async function getVariables() {
     try {
-      //const monthTransactions = await db.getMonthTransactions();
+      const monthTransactions = await db.getMonthTransactions();
       const budgetResponse = await db.getBudgetCount();
       const walletResponse = await db.getWalletCount();
       const savingResponse = await db.getSavingsCount();
@@ -48,7 +48,7 @@ export default function IndexScreen() {
       setWalletCount(walletResponse)
       setSavingsCount(savingResponse)
 
-      //handleTransactions(monthTransactions)
+      handleTransactions(monthTransactions)
     } 
     catch (error) {
       Alert.alert('Error', String(error));
