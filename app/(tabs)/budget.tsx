@@ -1,5 +1,5 @@
-import AddBudgetButton from '@/components/AddBudgetButton';
 import AddBudgetModal from '@/components/AddBudgetModal';
+import AddButton from '@/components/AddButton';
 import BudgetList from '@/components/BudgetList';
 import BudgetOverview from '@/components/BudgetOverview';
 import ScreenContainer from '@/components/ScreenContainer';
@@ -45,7 +45,7 @@ export default function BudgetScreen() {
     <ScreenContainer>
       <ScreenTitle title='Budgets' subtitle='Track your spending limits'/>
       <BudgetOverview totalBudget={totalBudget} totalSpent={totalSpent}/>
-      <AddBudgetButton onPress={() => setAddBudgetVisible(true)}/>
+      <AddButton item="BUDGET" onPress={() => setAddBudgetVisible(true)}/>
       
       <AddBudgetModal 
         visible={addBudgetVisible} 

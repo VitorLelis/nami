@@ -8,6 +8,7 @@ import TransactionMonth from '@/components/TransactionMonth';
 import { groupTransactions } from '@/utils/groupTransactions';
 import { FlatList } from 'react-native';
 import { formatMonth } from '@/utils/dateFormat';
+import EditDeleteRow from '@/components/EditDeleteRow';
 
 export default function WalletInfoScreen() {
     const [wallet,setWallet] = useState<Wallet>()
@@ -40,6 +41,12 @@ export default function WalletInfoScreen() {
   return (
     <ScreenContainer>
       <ScreenTitle title={wallet?.name ?? "Loading..."} subtitle='Wallet history'/>
+
+      <EditDeleteRow 
+        item="WALLET"
+        editPress={() => console.log("edit item")}
+        deletePress={() => console.log("delete item")}
+      />
 
       <FlatList
         data={monthData}

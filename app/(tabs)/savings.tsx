@@ -1,13 +1,13 @@
 import ScreenTitle from '@/components/ScreenTitle';
 import ScreenContainer from '@/components/ScreenContainer';
 import SavingOverview from '@/components/SavingsOverview';
-import AddSavingButton from '@/components/AddSavingButton';
 import SavingsList from '@/components/SavingsList';
 import { useEffect, useState } from 'react';
 import AddSavingModal from '@/components/AddSavingModal';
 import { Saving, useDatabase } from '@/db/useDatabase';
 import { useFocusEffect } from 'expo-router';
 import React from 'react';
+import AddButton from '@/components/AddButton';
 
 export default function SavingsScreen() {
   const [addSavingVisible,setAddSavingVisible] = useState(false);
@@ -46,7 +46,7 @@ export default function SavingsScreen() {
     <ScreenContainer>
       <ScreenTitle title='Saving Goals' subtitle='Track your financial targets'/>
       <SavingOverview totalGoal={totalGoal} totalSaved={totalSaved}/>
-      <AddSavingButton onPress={()=>setAddSavingVisible(true)}/>
+      <AddButton item="SAVING GOAL" onPress={()=>setAddSavingVisible(true)}/>
 
       <AddSavingModal 
         visible={addSavingVisible} 

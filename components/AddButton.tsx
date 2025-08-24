@@ -5,15 +5,16 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Colors from '@/constants/Colors';
 
 interface Props{
+  item: string
   onPress: () => void
 }
 
-export default function AddWalletButton({onPress}:Props) {
+export default function AddButton({item, onPress}:Props) {
   return (
     <Pressable style={styles.card} onPress={onPress}>
       <View style={styles.content}>
         <FontAwesome6 name="plus" size={14} color={Colors.background} />
-        <Text style={styles.text}>Add Wallet</Text>
+        <Text style={styles.text}>ADD {item}</Text>
       </View>
     </Pressable>
   );
@@ -24,7 +25,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.defaultYellow,
     borderRadius: 12,
     padding: 14,
-    marginTop: 14
+    marginTop: 14,
+    marginBottom: 16
   },
   content: {
     flexDirection: 'row',

@@ -13,7 +13,7 @@ export default function TransferMoneyButton() {
     <Pressable style={styles.card} onPress={handlePress}>
       <View style={styles.content}>
         <FontAwesome6 name="arrow-right-arrow-left" size={14} color={Colors.background} />
-        <Text style={styles.text}>Transfer Money</Text>
+        <Text style={styles.text}>TRANSFER MONEY</Text>
       </View>
     </Pressable>
   );

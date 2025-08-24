@@ -5,15 +5,16 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Colors from '@/constants/Colors';
 
 interface Props{
+  item: string
   onPress: () => void
 }
 
-export default function AddSavingButton({onPress}: Props) {
+export default function DeleteButton({item, onPress}:Props) {
   return (
     <Pressable style={styles.card} onPress={onPress}>
       <View style={styles.content}>
-        <FontAwesome6 name="plus" size={14} color={Colors.background} />
-        <Text style={styles.text}>Add Saving Goal</Text>
+        <FontAwesome6 name="trash-can" size={14} color={Colors.background} />
+        <Text style={styles.text}>DELETE {item}</Text>
       </View>
     </Pressable>
   );
@@ -21,11 +22,10 @@ export default function AddSavingButton({onPress}: Props) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: Colors.defaultYellow,
+    backgroundColor: Colors.expense,
     borderRadius: 12,
     padding: 14,
-    marginTop: 14,
-    marginBottom: 16,
+    marginTop: 14
   },
   content: {
     flexDirection: 'row',
