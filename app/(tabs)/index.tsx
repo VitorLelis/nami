@@ -23,8 +23,6 @@ export default function IndexScreen() {
   const db = useDatabase();
 
   const handleTransactions = (trs: Transaction[]) => {
-    setRecentTransactions(trs.slice(0,5))
-
     let income = 0;
     let expense = 0;
 
@@ -43,10 +41,12 @@ export default function IndexScreen() {
       const budgetResponse = await db.getBudgetCount();
       const walletResponse = await db.getWalletCount();
       const savingResponse = await db.getSavingsCount();
+      const recentResponse = await db.getRecentTransactions();
 
       setBudgetCount(budgetResponse)
       setWalletCount(walletResponse)
       setSavingsCount(savingResponse)
+      setRecentTransactions(recentResponse)
 
       handleTransactions(monthTransactions)
     } 

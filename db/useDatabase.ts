@@ -42,6 +42,21 @@ export type Saving = {
 export function useDatabase(){
     const db = useSQLiteContext();
 
+    async function getWallet(id: number) {
+      const query = `
+          SELECT id, name
+          FROM wallets
+          WHERE id = ?
+        `;
+
+        try {
+          const response = await db.getFirstAsync<Wallet>(query, [id]);
+          return response!;
+        } catch (error) {
+          throw error;
+        }
+    }
+
     async function getMonthTransactions(): Promise<Transaction[]> {
         const query = `
           SELECT t.id,t.value,t.desc,t.date,w.name AS wallet_name,g.name AS tag_name
@@ -50,6 +65,24 @@ export function useDatabase(){
           LEFT JOIN tags g ON t.tag_id = g.id
           WHERE strftime('%Y-%m', t.date) = strftime('%Y-%m', 'now')
           ORDER BY t.date DESC;
+        `;
+
+        try {
+          const rows = await db.getAllAsync<Transaction>(query);
+          return rows;
+        } catch (error) {
+          throw error;
+        }
+    }
+
+    async function getRecentTransactions(): Promise<Transaction[]> {
+        const query = `
+          SELECT t.id,t.value,t.desc,t.date,w.name AS wallet_name,g.name AS tag_name
+          FROM transactions t
+          LEFT JOIN wallets w ON t.wallet_id = w.id
+          LEFT JOIN tags g ON t.tag_id = g.id
+          ORDER BY t.date DESC
+          LIMIT 5;
         `;
 
         try {
@@ -258,8 +291,28 @@ export function useDatabase(){
         }
     }
 
+    async function getTransactionsFromWallet(wallet_id: number) {
+      const query = `
+          SELECT t.id, t.value, t.desc, t.date, w.name AS wallet_name, g.name AS tag_name
+          FROM transactions t
+          LEFT JOIN wallets w ON t.wallet_id = w.id
+          LEFT JOIN tags g ON t.tag_id = g.id
+          WHERE t.wallet_id = ?
+          ORDER BY t.date DESC
+        `;
+
+        try {
+          const rows = await db.getAllAsync<Transaction>(query,wallet_id);
+          return rows;
+        } catch (error) {
+          throw error;
+        }
+    }
+
     return {
+        getWallet,
         getMonthTransactions,
+        getRecentTransactions,
         getBudgetCount,
         getWalletCount,
         getSavingsCount,
@@ -273,6 +326,7 @@ export function useDatabase(){
         getWalletBalanceList,
         getBudgetList,
         getSavingList,
+        getTransactionsFromWallet,
     };
 
 }

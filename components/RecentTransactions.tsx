@@ -5,6 +5,7 @@ import Colors from '@/constants/Colors';
 import {Octicons, FontAwesome6} from '@expo/vector-icons';
 import toMoney from '@/utils/toMoney';
 import { Transaction } from '@/db/useDatabase';
+import { formatDate } from '@/utils/dateFormat';
 
 type Props = {
   recentTransactions: Transaction[];
@@ -27,7 +28,7 @@ export default function RecentTransactions({ recentTransactions }: Props) {
           </View>
           <View>
             <Text style={styles.description}>{item.desc}</Text>
-            <Text style={styles.date}>{item.date}</Text>
+            <Text style={styles.date}>{formatDate(item.date)}</Text>
           </View>
         </View>
 

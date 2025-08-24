@@ -2,6 +2,7 @@ import React from 'react';
 import { Alert, FlatList, Pressable, StyleSheet } from 'react-native';
 import WalletCard from './WalletCard';
 import { WalletBalance } from '@/db/useDatabase';
+import { router } from 'expo-router';
 
 type WalletListProps = {
   wallets: WalletBalance[];
@@ -13,7 +14,7 @@ export default function WalletList({ wallets }: WalletListProps) {
       data={wallets}
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
-        <Pressable onPress={() => Alert.alert('View Wallet', `${item.id}-> ${item.name}`)}>
+        <Pressable onPress={() => router.navigate(`/wallet/${item.id}`)}>
           <WalletCard name={item.name} amount={item.balance} />
         </Pressable>
         
