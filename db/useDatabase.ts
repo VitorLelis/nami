@@ -86,7 +86,7 @@ export function useDatabase(){
           LEFT JOIN wallets w ON t.wallet_id = w.id
           LEFT JOIN tags g ON t.tag_id = g.id
           ORDER BY t.date DESC
-          LIMIT 5;
+          LIMIT 4;
         `;
 
         try {
@@ -330,6 +330,17 @@ export function useDatabase(){
       }
     }
 
+    async function deleteTag(id: number) {
+      try {
+        await db.execAsync(`DELETE FROM transactions WHERE tag_id = ${id}`);
+        await db.execAsync(`DELETE FROM budgets WHERE tag_id = ${id}`);
+        await db.execAsync(`DELETE FROM savings WHERE tag_id = ${id}`);
+        await db.execAsync(`DELETE FROM tags WHERE id = ${id}`);
+      } catch (error) {
+        throw error;
+      }
+    }
+
     return {
         getWallet,
         getMonthTransactions,
@@ -350,6 +361,7 @@ export function useDatabase(){
         getTransactionsFromWallet,
         updateWallet,
         deleteWallet,
+        deleteTag,
     };
 
 }

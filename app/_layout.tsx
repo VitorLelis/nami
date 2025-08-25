@@ -53,6 +53,7 @@ function RootLayoutNav() {
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name='wallet/[id]' options={{ headerShown: false }}/>
+          <Stack.Screen name='tags' options={{ headerShown: false }}/>
         </Stack>
       </ThemeProvider>
     </SQLiteProvider>

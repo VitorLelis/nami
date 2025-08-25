@@ -7,8 +7,9 @@ import RecentTransactions from '@/components/RecentTransactions';
 import { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { Transaction, useDatabase } from '@/db/useDatabase';
-import { useFocusEffect } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import React from 'react';
+import TagButton from '@/components/TagButton';
 
 
 export default function IndexScreen() {
@@ -71,6 +72,7 @@ export default function IndexScreen() {
       <BalanceCard balance={monthBalance}/>
       <IncomeExpenseRow income={monthIncome} expense={monthExpense}/>
       <OverviewCards budgets={budgetCount} wallets={walletCount} goals={savingsCount} />
+      <TagButton onPress={()=> router.navigate("/tags")}/>
       <RecentTransactions recentTransactions={recentTransactions}/>
     </ScreenContainer>
   );
