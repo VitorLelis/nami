@@ -309,6 +309,23 @@ export function useDatabase(){
         }
     }
 
+    async function updateWallet(id: number, newName: string) {
+      try {
+        await db.execAsync(`UPDATE wallets SET name = '${newName}' WHERE id = ${id}`);
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    async function deleteWallet(id: number) {
+      try {
+        await db.execAsync(`DELETE FROM transactions WHERE wallet_id = ${id}`);
+        await db.execAsync(`DELETE FROM wallets WHERE id = ${id}`);
+      } catch (error) {
+        throw error;
+      }
+    }
+
     return {
         getWallet,
         getMonthTransactions,
@@ -327,6 +344,8 @@ export function useDatabase(){
         getBudgetList,
         getSavingList,
         getTransactionsFromWallet,
+        updateWallet,
+        deleteWallet,
     };
 
 }

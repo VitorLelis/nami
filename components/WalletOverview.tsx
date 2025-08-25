@@ -16,7 +16,7 @@ export default function WalletOverview({ totalBalance }: Props) {
     <View style={styles.card}>
       <View style={styles.header}>
         <FontAwesome6 name="wallet" size={16} color={Colors.text} />
-        <Text style={styles.title}>Wallet Overview</Text>
+        <Text style={styles.title}>Wallets Overview</Text>
       </View>
 
       <View style={styles.dividerContainer}>
