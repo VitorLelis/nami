@@ -11,10 +11,10 @@ export default function SavingsList({ savings }: SavingListProps) {
   return (
     <FlatList
       data={savings}
-      keyExtractor={(item) => item.id.toString()}
+      keyExtractor={(item) => item.tag_id.toString()}
       renderItem={({ item }) => (
-        <Pressable onPress={() => Alert.alert('View Goal', `${item.id}-> ${item.tag}`)}>
-          <SavingCard name={item.tag} saved={item.saved} goal={item.goal} />
+        <Pressable onPress={() => Alert.alert('View Goal', `${item.id}-> ${item.tag_name}`)}>
+          <SavingCard name={item.tag_name} saved={item.saved} goal={item.goal} />
         </Pressable>
         
       )}

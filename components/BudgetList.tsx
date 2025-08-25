@@ -11,10 +11,10 @@ export default function BudgetList({ budgets }: BudgetListProps) {
   return (
     <FlatList
       data={budgets}
-      keyExtractor={(item) => item.id.toString()}
+      keyExtractor={(item) => item.tag_id.toString()}
       renderItem={({ item }) => (
-        <Pressable onPress={() => Alert.alert('View Budget', `${item.id}-> ${item.tag}`)}>
-          <BudgetCard name={item.tag} spent={item.spent} limit={item.limit_amount} />
+        <Pressable onPress={() => Alert.alert('View Budget', `${item.id}-> ${item.tag_name}`)}>
+          <BudgetCard name={item.tag_name} spent={Math.abs(item.spent)} limit={item.limit_amount} />
         </Pressable>
         
       )}

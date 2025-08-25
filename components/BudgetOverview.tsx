@@ -27,7 +27,7 @@ export default function BudgetOverview({ totalBudget, totalSpent }: BudgetOvervi
         </View>
         <View style={styles.column}>
           <Text style={[styles.amount, { color: Colors.expense }]}>
-            {toMoney(totalSpent)}
+            {toMoney(Math.abs(totalSpent))}
           </Text>
           <Text style={styles.label}>Total Spent</Text>
         </View>
