@@ -51,6 +51,15 @@ export default function AddTransactionInfo()  {
     }
   }
 
+  const handleClose = () => {
+    setValue('')
+    setDesc('')
+    setDate(new Date())
+    setWallet(undefined)
+    setTag(undefined)
+    setMessageVisible(false)
+  }
+
   return (
     <View style={styles.container}>
       {/*Modals*/}
@@ -80,7 +89,9 @@ export default function AddTransactionInfo()  {
       <MessageModal
         visible={messageVisible}
         message="TRANSACTION ADDED"
-        onClose={() => setMessageVisible(false)}
+        buttonText="CLOSE"
+        onPress={handleClose}
+        onClose={handleClose}
       />
 
       {/* Transaction Type Toggle */}

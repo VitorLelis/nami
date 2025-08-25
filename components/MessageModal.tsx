@@ -6,10 +6,12 @@ import Colors from '@/constants/Colors';
 interface Props {
   visible: boolean;
   message: string;
+  buttonText: string
+  onPress: () => void,
   onClose: () => void;
 }
 
-export default function MessageModal({ visible, message, onClose }: Props) {
+export default function MessageModal({ visible, message,buttonText,onPress, onClose }: Props) {
 
   return (
     <Modal
@@ -20,8 +22,8 @@ export default function MessageModal({ visible, message, onClose }: Props) {
       <View style={styles.overlay}>
         <View style={styles.modalContainer}>
           <Text style={styles.title}>{message}</Text>
-          <Pressable style={styles.card} onPress={onClose}>
-              <Text style={styles.text}>CLOSE</Text>
+          <Pressable style={styles.card} onPress={onPress}>
+              <Text style={styles.text}>{buttonText}</Text>
           </Pressable>
         </View>
       </View>
