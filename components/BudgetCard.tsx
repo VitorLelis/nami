@@ -11,8 +11,9 @@ type BudgetCardProps = {
 };
 
 export default function BudgetCard({ name, spent,limit }: BudgetCardProps) {
-  const isOverBudget = spent > limit;
-  const percentage = limit != 0? (spent / limit) * 100 : 100 // avoid division by zero
+  const spentValue = Math.max(-spent ,0) // avoid positive values and keep the percentage correct
+  const isOverBudget = spentValue > limit;
+  const percentage = limit != 0? (spentValue / limit) * 100 : 100 // avoid division by zero
 
   return (
     <View style={styles.card}>
@@ -22,7 +23,7 @@ export default function BudgetCard({ name, spent,limit }: BudgetCardProps) {
 
       <View style={styles.amountRow}>
         <Text style={[styles.spent, isOverBudget ? styles.red : styles.default]}>
-          {toMoney(spent)} spent
+          {toMoney(spentValue)} spent
         </Text>
         <Text style={styles.muted}>of {toMoney(limit)}</Text>
       </View>
@@ -54,7 +55,7 @@ export default function BudgetCard({ name, spent,limit }: BudgetCardProps) {
         </Text>
         {isOverBudget && (
           <Text style={[styles.red, styles.bold]}>
-            {toMoney(spent - limit)} over budget
+            {toMoney(spentValue - limit)} over budget
           </Text>
         )}
       </View>

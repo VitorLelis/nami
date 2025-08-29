@@ -43,7 +43,7 @@ export default function BudgetScreen() {
 
   return (
     <ScreenContainer>
-      <ScreenTitle title='Budgets' subtitle='Track your spending limits'/>
+      <ScreenTitle title='Budgets' subtitle='Track your monthly spending limits'/>
       <BudgetOverview totalBudget={totalBudget} totalSpent={totalSpent}/>
       <AddButton item="BUDGET" onPress={() => setAddBudgetVisible(true)}/>
       
