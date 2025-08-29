@@ -97,19 +97,19 @@ export default function AddTransactionInfo()  {
       {/* Transaction Type Toggle */}
       <View style={styles.toggleRow}>
         <Pressable
-          style={[styles.toggleButton, transactionType === "expense" && styles.activeButton]}
+          style={[styles.toggleButton, transactionType === "expense" && styles.activeExpenseButton]}
           onPress={() => setTransactionType("expense")}
         >
-          <Text style={[styles.buttonText,transactionType === "expense" && styles.activeButtonText]}>
+          <Text style={[styles.buttonExpenseText,transactionType === "expense" && styles.activeButtonText]}>
             EXPENSE
             </Text>
         </Pressable>
 
         <Pressable
-          style={[styles.toggleButton, transactionType === "income" && styles.activeButton]}
+          style={[styles.toggleButton, transactionType === "income" && styles.activeIncomeButton]}
           onPress={() => setTransactionType("income")}
         >
-          <Text style={[styles.buttonText,transactionType === "income" && styles.activeButtonText]}>
+          <Text style={[styles.buttonIncomeText,transactionType === "income" && styles.activeButtonText]}>
             INCOME
             </Text>
         </Pressable>
@@ -209,16 +209,23 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
     backgroundColor: Colors.defaultGray
   },
-  buttonText: {
-    color: Colors.defaultYellow,
+  buttonIncomeText: {
+    color: Colors.income,
+    fontWeight: "bold",
+  },
+  buttonExpenseText: {
+    color: Colors.expense,
     fontWeight: "bold",
   },
   activeButtonText: {
     color: Colors.background,
     fontWeight: "bold",
   },
-  activeButton: {
-    backgroundColor: Colors.defaultYellow,
+  activeIncomeButton: {
+    backgroundColor: Colors.income,
+  },
+  activeExpenseButton: {
+    backgroundColor: Colors.expense,
   },
   title: {
     fontSize: 20,
