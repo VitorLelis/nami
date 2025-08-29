@@ -280,9 +280,7 @@ export function useDatabase(){
           SELECT s.id, s.goal,s.tag_id, g.name AS tag_name, IFNULL(SUM(t.value),0) AS saved
           FROM savings s
           JOIN tags g ON s.tag_id = g.id
-          LEFT JOIN transactions t 
-                    ON t.tag_id = s.tag_id
-                    AND strftime('%Y-%m', t.date) = strftime('%Y-%m', 'now') 
+          LEFT JOIN transactions t ON t.tag_id = s.tag_id
           GROUP BY s.id, s.goal, g.name
           ORDER BY s.id
         `;
