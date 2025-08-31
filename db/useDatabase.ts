@@ -9,6 +9,7 @@ export type Transaction = {
   wallet_name: string;
   tag_id: number;
   tag_name: string;
+  tag_icon: string
 }
 
 export type Wallet = {
@@ -19,6 +20,7 @@ export type Wallet = {
 export type Tag = {
   id: number;
   name: string;
+  icon: string
 }
 
 export type WalletBalance = {
@@ -32,6 +34,7 @@ export type Budget = {
   limit_amount: number;
   tag_id:number;
   tag_name: string;
+  tag_icon: string;
   spent: number;
 }
 
@@ -40,6 +43,7 @@ export type Saving = {
   goal: number;
   tag_id: number;
   tag_name: string;
+  tag_icon: string;
   saved: number;
 }
 
@@ -63,7 +67,7 @@ export function useDatabase(){
 
     async function getMonthTransactions(): Promise<Transaction[]> {
         const query = `
-          SELECT t.id,t.value,t.desc,t.date,t.wallet_id, w.name AS wallet_name, t.tag_id, g.name AS tag_name
+          SELECT t.id,t.value,t.desc,t.date,t.wallet_id, w.name AS wallet_name, t.tag_id, g.name AS tag_name, g.icon AS tag_icon
           FROM transactions t
           LEFT JOIN wallets w ON t.wallet_id = w.id
           LEFT JOIN tags g ON t.tag_id = g.id
@@ -81,7 +85,7 @@ export function useDatabase(){
 
     async function getRecentTransactions(): Promise<Transaction[]> {
         const query = `
-          SELECT t.id,t.value,t.desc,t.date, t.wallet_id, w.name AS wallet_name, t.tag_id, g.name AS tag_name
+          SELECT t.id,t.value,t.desc,t.date, t.wallet_id, w.name AS wallet_name, t.tag_id, g.name AS tag_name, g.icon AS tag_icon
           FROM transactions t
           LEFT JOIN wallets w ON t.wallet_id = w.id
           LEFT JOIN tags g ON t.tag_id = g.id
@@ -147,13 +151,13 @@ export function useDatabase(){
         }
     }
 
-    async function addTag(name:string) {
+    async function addTag(name:string, icon: string) {
         const query = await db.prepareAsync(
-          'INSERT INTO tags (name) VALUES (?)',
+          'INSERT INTO tags (name, icon) VALUES (?,?)',
         );
 
         try {
-          const result = await query.executeAsync(name);
+          const result = await query.executeAsync([name,icon]);
 
           const insertedRowId = result.lastInsertRowId;
 
@@ -210,7 +214,7 @@ export function useDatabase(){
 
     async function getTagList() {
       const query = `
-          SELECT g.id, g.name
+          SELECT g.id, g.name, g.icon
           FROM tags g
           ORDER BY g.name
         `;
@@ -257,7 +261,7 @@ export function useDatabase(){
 
     async function getBudgetList() {
       const query = `
-          SELECT b.id, b.limit_amount,b.tag_id, g.name AS tag_name, IFNULL(SUM(t.value),0) AS spent
+          SELECT b.id, b.limit_amount,b.tag_id, g.name AS tag_name, g.icon AS tag_icon, IFNULL(SUM(t.value),0) AS spent
           FROM budgets b
           JOIN tags g ON b.tag_id = g.id
           LEFT JOIN transactions t 
@@ -277,7 +281,7 @@ export function useDatabase(){
 
     async function getSavingList() {
       const query = `
-          SELECT s.id, s.goal,s.tag_id, g.name AS tag_name, IFNULL(SUM(t.value),0) AS saved
+          SELECT s.id, s.goal,s.tag_id, g.name AS tag_name, g.icon AS tag_icon, IFNULL(SUM(t.value),0) AS saved
           FROM savings s
           JOIN tags g ON s.tag_id = g.id
           LEFT JOIN transactions t ON t.tag_id = s.tag_id
@@ -295,7 +299,7 @@ export function useDatabase(){
 
     async function getTransactionsFromWallet(wallet_id: number) {
       const query = `
-          SELECT t.id, t.value, t.desc, t.date,t.wallet_id, w.name AS wallet_name,t.tag_id, g.name AS tag_name
+          SELECT t.id, t.value, t.desc, t.date,t.wallet_id, w.name AS wallet_name,t.tag_id, g.name AS tag_name, g.icon AS tag_icon
           FROM transactions t
           LEFT JOIN wallets w ON t.wallet_id = w.id
           LEFT JOIN tags g ON t.tag_id = g.id

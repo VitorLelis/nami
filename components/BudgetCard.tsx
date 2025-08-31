@@ -3,14 +3,16 @@ import { Text, View } from '@/components/Themed';
 import { StyleSheet } from "react-native";
 import toMoney from "@/utils/toMoney";
 import Colors from "@/constants/Colors";
+import { FontAwesome6 } from "@expo/vector-icons";
 
 type BudgetCardProps = {
     name: string;
+    icon: string;
     spent: number;
     limit: number;
 };
 
-export default function BudgetCard({ name, spent,limit }: BudgetCardProps) {
+export default function BudgetCard({ name, icon, spent,limit }: BudgetCardProps) {
   const spentValue = Math.max(-spent ,0) // avoid positive values and keep the percentage correct
   const isOverBudget = spentValue > limit;
   const percentage = limit != 0? (spentValue / limit) * 100 : 100 // avoid division by zero
@@ -18,6 +20,7 @@ export default function BudgetCard({ name, spent,limit }: BudgetCardProps) {
   return (
     <View style={styles.card}>
       <View style={styles.header}>
+        <FontAwesome6 name={icon} size={14} color={Colors.text} />
         <Text style={styles.title}>{name}</Text>
       </View>
 
@@ -71,10 +74,13 @@ const styles = StyleSheet.create({
   },
   header: {
     marginBottom: 8,
+    flexDirection: "row",
+    alignItems: "center",
   },
   title: {
     fontSize: 16,
     fontWeight: "600",
+    marginLeft: 10,
   },
   amountRow: {
     flexDirection: "row",

@@ -3,6 +3,7 @@ import { View,Text } from './Themed';
 import { Modal, TextInput, StyleSheet, Pressable, Alert } from 'react-native';
 import Colors from '@/constants/Colors';
 import { useDatabase } from '@/db/useDatabase';
+import IconPicker from './IconPicker';
 
 interface Props {
   visible: boolean;
@@ -11,6 +12,7 @@ interface Props {
 
 export default function AddSavingModal({ visible, onClose }: Props) {
   const [tagInput, setTagInput] = useState('');
+  const [tagIcon, setTagIcon] = useState('tag')
   const [savingInput, setSavingInput] = useState('');
 
   const db = useDatabase();
@@ -21,7 +23,7 @@ export default function AddSavingModal({ visible, onClose }: Props) {
           Alert.alert('Error', 'It must be a Number!');  
         }
 
-        const tagId = (await db.addTag(tagInput)).insertedRowId
+        const tagId = (await db.addTag(tagInput,tagIcon)).insertedRowId
         await db.addSaving(tagId,Number(savingInput))
       
     } catch (error) {
@@ -29,7 +31,8 @@ export default function AddSavingModal({ visible, onClose }: Props) {
     }
 
     setTagInput('');
-    setSavingInput('')
+    setSavingInput('');
+    setTagIcon('tag');
     onClose();  
   };
 
@@ -57,6 +60,9 @@ export default function AddSavingModal({ visible, onClose }: Props) {
             onChangeText={setSavingInput}
             keyboardType="numeric"
           />
+
+          <IconPicker selectedIcon={tagIcon} onSelect={setTagIcon}/>
+
           <Pressable style={styles.card} onPress={handlePress}>
               <Text style={styles.text}>SUBMIT</Text>
           </Pressable>
@@ -75,6 +81,7 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     width: '80%',
+    maxHeight:'80%',
     backgroundColor: Colors.defaultGray,
     borderRadius: 10,
     padding: 20,

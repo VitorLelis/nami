@@ -18,7 +18,10 @@ export default function TransactionCard({ transaction, onEdit, onDelete }: Props
     <View style={styles.card}>
       <View style={styles.leftSection}>
         <View style={styles.textContainer}>
-          <Text style={styles.description}>{transaction.desc}</Text>
+          <View style={styles.titleIcon}>
+            <FontAwesome6 name={transaction.tag_icon} size={14} color={Colors.text} />
+            <Text style={styles.description}>{transaction.desc}</Text>
+          </View>
           <Text style={styles.subText}>
             {transaction.tag_name} • {transaction.wallet_name} • {formatDate(transaction.date)}
           </Text>
@@ -59,6 +62,11 @@ const styles = StyleSheet.create({
     flex: 1,
     marginRight: 8,
   },
+  titleIcon: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+  },
   textContainer: {
     marginLeft: 8,
     flex: 1,
@@ -66,6 +74,7 @@ const styles = StyleSheet.create({
   description: {
     fontWeight: "600",
     fontSize: 14,
+    marginLeft: 8,
   },
   subText: {
     fontSize: 12,

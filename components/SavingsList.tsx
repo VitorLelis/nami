@@ -14,7 +14,7 @@ export default function SavingsList({ savings }: SavingListProps) {
       keyExtractor={(item) => item.tag_id.toString()}
       renderItem={({ item }) => (
         <Pressable onPress={() => Alert.alert('View Goal', `${item.id}-> ${item.tag_name}`)}>
-          <SavingCard name={item.tag_name} saved={item.saved} goal={item.goal} />
+          <SavingCard name={item.tag_name} icon={item.tag_icon} saved={item.saved} goal={item.goal} />
         </Pressable>
         
       )}

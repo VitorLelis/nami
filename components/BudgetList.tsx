@@ -14,7 +14,7 @@ export default function BudgetList({ budgets }: BudgetListProps) {
       keyExtractor={(item) => item.tag_id.toString()}
       renderItem={({ item }) => (
         <Pressable onPress={() => Alert.alert('View Budget', `${item.id}-> ${item.tag_name}`)}>
-          <BudgetCard name={item.tag_name} spent={(item.spent)} limit={item.limit_amount} />
+          <BudgetCard name={item.tag_name} icon={item.tag_icon} spent={(item.spent)} limit={item.limit_amount} />
         </Pressable>
         
       )}

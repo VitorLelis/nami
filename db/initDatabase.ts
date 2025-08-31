@@ -10,7 +10,8 @@ export async function initDatabase(db: SQLiteDatabase) {
   await db.execAsync(`
         CREATE TABLE IF NOT EXISTS tags (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL
+            name TEXT NOT NULL,
+            icon TEXT NOT NULL
         );`);
 
   await db.execAsync(`

@@ -3,19 +3,22 @@ import { Text, View } from '@/components/Themed';
 import { StyleSheet } from "react-native";
 import toMoney from "@/utils/toMoney";
 import Colors from "@/constants/Colors";
+import { FontAwesome6 } from "@expo/vector-icons";
 
 type SavingCardProps = {
     name: string;
+    icon: string;
     saved: number;
     goal: number;
 };
 
-export default function SavingCard({ name, saved,goal }: SavingCardProps) {
+export default function SavingCard({ name,icon, saved,goal }: SavingCardProps) {
   const percentage = (saved / goal) * 100
 
   return (
     <View style={styles.card}>
       <View style={styles.header}>
+        <FontAwesome6 name={icon} size={14} color={Colors.text} />
         <Text style={styles.title}>{name}</Text>
       </View>
 
@@ -65,10 +68,13 @@ const styles = StyleSheet.create({
   },
   header: {
     marginBottom: 8,
+    flexDirection: "row",
+    alignItems: "center",
   },
   title: {
     fontSize: 16,
     fontWeight: "600",
+    marginLeft:10,
   },
   amountRow: {
     flexDirection: "row",

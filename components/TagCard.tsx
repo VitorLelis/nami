@@ -4,8 +4,6 @@ import { TouchableOpacity, StyleSheet } from "react-native";
 import { Tag } from "@/db/useDatabase";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Colors from "@/constants/Colors";
-import toMoney from "@/utils/toMoney";
-import { formatDate } from "@/utils/dateFormat";
 
 type Props = {
   tag: Tag;
@@ -17,6 +15,7 @@ export default function TagCard({ tag, onEdit, onDelete }: Props) {
   return (
     <View style={styles.card}>
       <View style={styles.leftSection}>
+          <FontAwesome6 name={tag.icon} size={18} color={Colors.text} />
           <Text style={styles.textContainer}>{tag.name}</Text>
       </View>
 
@@ -38,7 +37,7 @@ const styles = StyleSheet.create({
   card: {
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 12,
+    padding: 16,
     borderRadius: 12,
     marginBottom: 12,
     backgroundColor: Colors.defaultGray,
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   textContainer: {
-    marginLeft: 8,
+    marginLeft: 10,
     flex: 1,
     fontWeight: "600",
     fontSize: 18,

@@ -4,6 +4,7 @@ import { Modal, StyleSheet, Pressable, FlatList, TouchableOpacity } from 'react-
 import Colors from '@/constants/Colors';
 import { Tag, useDatabase } from '@/db/useDatabase';
 import { router, useFocusEffect } from 'expo-router';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
 interface Props {
   visible: boolean;
@@ -53,6 +54,7 @@ export default function PickTagModal({ visible, onClose, onPick }: Props) {
                   onClose();
                 }}
               >
+                <FontAwesome6 name={item.icon} size={14} color={Colors.lightGray} />
                 <Text style={styles.itemText}>{item.name}</Text>
               </TouchableOpacity>
             )}
@@ -99,17 +101,19 @@ const styles = StyleSheet.create({
   },
   item: {
       width: "100%",
-      paddingHorizontal: 58,
+      paddingHorizontal: 18,
       paddingVertical: 16,
       marginVertical: 6, 
       borderRadius: 12, 
       backgroundColor: Colors.progessBar,
       alignItems: "center",
+      flexDirection: "row",
     },
   itemText: {
       fontSize: 16,
       fontWeight: "500",
       color: Colors.lightGray,
+      marginLeft: 18,
     },
   card: {
       backgroundColor: Colors.defaultYellow,
