@@ -6,25 +6,18 @@ import { Tag, useDatabase } from '@/db/useDatabase';
 
 interface Props {
   visible: boolean;
-  onCreate: (tag: Tag) => void;
   onClose: () => void;
 }
 
-export default function AddTagModal({ visible, onClose, onCreate }: Props) {
+export default function AddTagModal({ visible, onClose }: Props) {
   const [inputValue, setInputValue] = useState('');
 
   const db = useDatabase();
 
   const handlePress = async () => {
     try {
-      const response = await db.addTag(inputValue); 
+      await db.addTag(inputValue); 
 
-        const myTag: Tag = {
-          id: response.insertedRowId,
-          name: inputValue,
-        };
-
-        onCreate(myTag)
     } catch (error) {
       Alert.alert('Error', String(error));
     }

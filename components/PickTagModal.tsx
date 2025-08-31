@@ -3,16 +3,15 @@ import { View,Text } from './Themed';
 import { Modal, StyleSheet, Pressable, FlatList, TouchableOpacity } from 'react-native';
 import Colors from '@/constants/Colors';
 import { Tag, useDatabase } from '@/db/useDatabase';
-import { useFocusEffect } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 
 interface Props {
   visible: boolean;
   onClose: () => void;
   onPick: (tag: Tag) => void;
-  onPickNew: () => void;
 }
 
-export default function PickTagModal({ visible, onClose, onPick, onPickNew }: Props) {
+export default function PickTagModal({ visible, onClose, onPick }: Props) {
   const [tagList,setTagList] = useState<Tag[]>([])
 
   const db = useDatabase();
@@ -59,7 +58,9 @@ export default function PickTagModal({ visible, onClose, onPick, onPickNew }: Pr
             )}
           />
 
-          <Pressable style={styles.card} onPress={onPickNew}>
+          <Pressable style={styles.card} onPress={() => {
+            onClose();router.navigate("/tags")}
+            }>
               <Text style={styles.text}>CREATE NEW TAG</Text>
           </Pressable>
         </View>

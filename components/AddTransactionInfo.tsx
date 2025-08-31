@@ -5,7 +5,6 @@ import { TextInput, Pressable, StyleSheet, Platform, Alert, TouchableOpacity} fr
 import { Text,View } from "./Themed";
 import { FontAwesome6 } from "@expo/vector-icons";
 import PickTagModal from "./PickTagModal";
-import AddTagModal from "./AddTagModal";
 import PickWalletModal from "./PickWalletModal";
 import RNDateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import MessageModal from "./MessageModal";
@@ -19,7 +18,6 @@ export default function AddTransactionInfo()  {
   const [walletPickVisible, setWalletPickVisible] = useState(false)
   const [tag,setTag] = useState<Tag>()
   const [tagPickVisible, setTagPickVisible] = useState(false)
-  const [newTagVisible, setNewTagVisible] = useState(false)
   const [date,setDate] = useState<Date>(new Date())
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [formattedDate, setFormattedDate] = useState('');
@@ -74,16 +72,6 @@ export default function AddTransactionInfo()  {
         visible={tagPickVisible}
         onClose={() => setTagPickVisible(false)}
         onPick={setTag}
-        onPickNew={()=> {
-          setTagPickVisible(false);
-          setNewTagVisible(true);
-        }}
-      />
-
-      <AddTagModal
-        visible={newTagVisible}
-        onCreate={setTag}
-        onClose={() => {setNewTagVisible(false);}}
       />
 
       <MessageModal

@@ -1,25 +1,17 @@
 import ScreenTitle from '@/components/ScreenTitle';
 import ScreenContainer from '@/components/ScreenContainer';
 import { useEffect, useState } from 'react';
-import { Tag, Transaction, useDatabase, Wallet } from '@/db/useDatabase';
-import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
+import { Tag, useDatabase } from '@/db/useDatabase';
+import { useFocusEffect } from 'expo-router';
 import React from 'react';
-import TransactionMonth from '@/components/TransactionMonth';
-import { groupTransactions } from '@/utils/groupTransactions';
-import { Alert, FlatList, Pressable } from 'react-native';
-import { formatMonth } from '@/utils/dateFormat';
-import EditDeleteRow from '@/components/EditDeleteRow';
-import MessageModal from '@/components/MessageModal';
-import EditWalletModal from '@/components/EditWalletModal';
+import { FlatList } from 'react-native';
 import TagCard from '@/components/TagCard';
-
-//add tag button
-//edit and delete tag buttons
+import AddButton from '@/components/AddButton';
+import AddTagModal from '@/components/AddTagModal';
 
 export default function TagScreen() {
     const [tagList,setTagList] = useState<Tag[]>([])
-    const [editVisible,setEditVisible] = useState(false)
-    const [deleteVisible,setDeleteVisible] = useState(false)
+    const [addVisible,setAddVisible] = useState(false)
 
   const db = useDatabase();
 
@@ -41,21 +33,14 @@ export default function TagScreen() {
   return (
     <ScreenContainer>
 
-      {/*<MessageModal 
-        visible={deleteVisible}
-        message='DELETE THE WALLET?'
-        buttonText='DELETE'
-        onPress={handleDelete}
-        onClose={() => setDeleteVisible(false)}
-      />*/}
+      <AddTagModal visible={addVisible} onClose={() => {
+        setAddVisible(false);
+        getTags();
+        }}/>
 
       <ScreenTitle title= "Tags" subtitle='Manage all your tags'/>
 
-      {/*<EditDeleteRow 
-        item="WALLET"
-        editPress={() => setEditVisible(true)}
-        deletePress={() => setDeleteVisible(true)}
-      />*/}
+      <AddButton item='TAG' onPress={() => setAddVisible(true)}/>
 
       <FlatList
             data={tagList}
