@@ -65,6 +65,23 @@ export function useDatabase(){
         }
     }
 
+    async function getBudget(id: number) {
+      const query = `
+          SELECT b.id, b.limit_amount,b.tag_id, g.name AS tag_name, g.icon AS tag_icon, IFNULL(SUM(t.value),0) AS spent
+          FROM budgets b
+          JOIN tags g ON b.tag_id = g.id
+          LEFT JOIN transactions t ON t.tag_id = b.tag_id
+          WHERE b.id = ${id}
+        `;
+
+        try {
+          const response = await db.getFirstAsync<Budget>(query);
+          return response!;
+        } catch (error) {
+          throw error;
+        }
+    }
+
     async function getMonthTransactions(): Promise<Transaction[]> {
         const query = `
           SELECT t.id,t.value,t.desc,t.date,t.wallet_id, w.name AS wallet_name, t.tag_id, g.name AS tag_name, g.icon AS tag_icon
@@ -315,6 +332,24 @@ export function useDatabase(){
         }
     }
 
+    async function getTransactionsFromTag(tag_id: number) {
+      const query = `
+          SELECT t.id, t.value, t.desc, t.date,t.wallet_id, w.name AS wallet_name,t.tag_id, g.name AS tag_name, g.icon AS tag_icon
+          FROM transactions t
+          LEFT JOIN wallets w ON t.wallet_id = w.id
+          LEFT JOIN tags g ON t.tag_id = g.id
+          WHERE t.tag_id = ${tag_id}
+          ORDER BY t.date DESC
+        `;
+
+        try {
+          const rows = await db.getAllAsync<Transaction>(query);
+          return rows;
+        } catch (error) {
+          throw error;
+        }
+    }
+
     async function updateWallet(id: number, newName: string) {
       try {
         await db.execAsync(`UPDATE wallets SET name = '${newName}' WHERE id = ${id}`);
@@ -326,6 +361,14 @@ export function useDatabase(){
     async function updateTag(id: number, newName: string, newIcon: string) {
       try {
         await db.execAsync(`UPDATE tags SET name = '${newName}', icon = '${newIcon}' WHERE id = ${id}`);
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    async function updateBudget(id: number, newLimit: number) {
+      try {
+        await db.execAsync(`UPDATE budgets SET limit_amount = '${newLimit}' WHERE id = ${id}`);
       } catch (error) {
         throw error;
       }
@@ -353,6 +396,7 @@ export function useDatabase(){
 
     return {
         getWallet,
+        getBudget,
         getMonthTransactions,
         getRecentTransactions,
         getBudgetCount,
@@ -369,8 +413,10 @@ export function useDatabase(){
         getBudgetList,
         getSavingList,
         getTransactionsFromWallet,
+        getTransactionsFromTag,
         updateWallet,
         updateTag,
+        updateBudget,
         deleteWallet,
         deleteTag,
     };
