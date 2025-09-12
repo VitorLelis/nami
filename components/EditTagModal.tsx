@@ -1,29 +1,28 @@
 import React, { useState } from 'react';
 import { View, Text } from './Themed';
-import { Modal, TextInput, StyleSheet, Pressable, Alert } from 'react-native';
+import { Modal, TextInput, StyleSheet, Pressable, Alert} from 'react-native';
 import Colors from '@/constants/Colors';
-import { useDatabase } from '@/db/useDatabase';
+import { Tag, useDatabase } from '@/db/useDatabase';
 import IconPicker from './IconPicker';
 
 interface Props {
+  tag: Tag;
   visible: boolean;
   onClose: () => void;
 }
 
-export default function AddTagModal({ visible, onClose }: Props) {
-  const [tagName, setTagName] = useState('');
-  const [selectedIcon, setSelectedIcon] = useState('tag');
+export default function EditTagModal({ tag, visible, onClose }: Props) {
+  const [tagName, setTagName] = useState(tag.name ?? '');
+  const [selectedIcon, setSelectedIcon] = useState(tag.icon ?? 'tag');
   const db = useDatabase();
 
   const handlePress = async () => {
     try {
-      await db.addTag(tagName, selectedIcon,);
+      await db.updateTag(tag.id, tagName, selectedIcon,);
     } catch (error) {
       Alert.alert('Error', String(error));
     }
 
-    setTagName('');
-    setSelectedIcon('tag');
     onClose();
   };
 
@@ -31,7 +30,7 @@ export default function AddTagModal({ visible, onClose }: Props) {
     <Modal transparent={true} visible={visible} onRequestClose={onClose}>
       <View style={styles.overlay}>
         <View style={styles.modalContainer}>
-          <Text style={styles.title}>ADD TAG</Text>
+          <Text style={styles.title}>EDIT TAG</Text>
 
           {/* Input */}
           <TextInput

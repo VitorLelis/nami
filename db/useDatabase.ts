@@ -323,6 +323,14 @@ export function useDatabase(){
       }
     }
 
+    async function updateTag(id: number, newName: string, newIcon: string) {
+      try {
+        await db.execAsync(`UPDATE tags SET name = '${newName}', icon = '${newIcon}' WHERE id = ${id}`);
+      } catch (error) {
+        throw error;
+      }
+    }
+
     async function deleteWallet(id: number) {
       try {
         await db.execAsync(`DELETE FROM transactions WHERE wallet_id = ${id}`);
@@ -362,6 +370,7 @@ export function useDatabase(){
         getSavingList,
         getTransactionsFromWallet,
         updateWallet,
+        updateTag,
         deleteWallet,
         deleteTag,
     };

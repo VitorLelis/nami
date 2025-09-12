@@ -9,12 +9,14 @@ import TagCard from '@/components/TagCard';
 import AddButton from '@/components/AddButton';
 import AddTagModal from '@/components/AddTagModal';
 import MessageModal from '@/components/MessageModal';
+import EditTagModal from '@/components/EditTagModal';
 
 export default function TagScreen() {
   const [tagList,setTagList] = useState<Tag[]>([])
   const [addVisible,setAddVisible] = useState(false)
+  const [editVisible,setEditVisible] = useState(false)
   const [deleteVisible,setDeleteVisible] = useState(false)
-  const [selectedId, setSelectedId] = useState(0)
+  const [selectedTag, setSelectedTag] = useState<Tag>()
 
   const db = useDatabase();
 
@@ -25,7 +27,7 @@ export default function TagScreen() {
 
   async function handleDelete() {
     try {
-      await db.deleteTag(Number(selectedId));
+      await db.deleteTag(Number(selectedTag?.id));
     } catch (error) {
       Alert.alert('Error', String(error));
     }
@@ -52,6 +54,18 @@ export default function TagScreen() {
         }}
       />
 
+      {editVisible && selectedTag && (
+        <EditTagModal    
+          tag={selectedTag}
+          visible={editVisible}
+          onClose={() => {
+            getTags();
+            setEditVisible(false);
+            setSelectedTag(undefined);
+          }}
+        />
+      )}
+
       <MessageModal 
         visible={deleteVisible}
         message='DELETE THE TAG?'
@@ -69,9 +83,12 @@ export default function TagScreen() {
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <TagCard tag={item} 
-                onEdit={() => console.log("edit tag")} 
+                onEdit={() => {
+                  setSelectedTag(item);
+                  setEditVisible(true)
+                }} 
                 onDelete={() => {
-                  setSelectedId(item.id);
+                  setSelectedTag(item);
                   setDeleteVisible(true)
                 }} 
               />
