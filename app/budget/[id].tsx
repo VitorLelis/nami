@@ -36,7 +36,7 @@ export default function BudgetInfoScreen() {
       Alert.alert('Error', String(error));
     }
     setDeleteVisible(false)
-    router.navigate('/(tabs)/budget')
+    router.back()
   }
 
   useEffect(() => {

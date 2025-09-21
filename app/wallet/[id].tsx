@@ -36,7 +36,7 @@ export default function WalletInfoScreen() {
       Alert.alert('Error', String(error));
     }
     setDeleteVisible(false)
-    router.navigate('/(tabs)/wallet')
+    router.back()
   }
 
   useEffect(() => {
