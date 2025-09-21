@@ -12,9 +12,9 @@ interface Props {
 }
 
 export default function EditSavingModal({ saving, visible, onClose }: Props) {
-  const [tagName, setTagName] = useState(saving?.tag_name);
-  const [tagIcon, setTagIcon] = useState(saving?.tag_icon);
-  const [goal, setGoal] = useState(saving?.goal.toString());
+  const [tagName, setTagName] = useState(saving?.tag_name ?? '');
+  const [tagIcon, setTagIcon] = useState(saving?.tag_icon ?? 'tag');
+  const [goal, setGoal] = useState(saving?.goal.toString() ?? '');
 
   const db = useDatabase();
 
