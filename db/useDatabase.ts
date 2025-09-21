@@ -82,6 +82,23 @@ export function useDatabase(){
         }
     }
 
+    async function getSaving(id: number) {
+      const query = `
+          SELECT s.id, s.goal, s.tag_id, g.name AS tag_name, g.icon AS tag_icon, IFNULL(SUM(t.value),0) AS saved
+          FROM savings s
+          JOIN tags g ON s.tag_id = g.id
+          LEFT JOIN transactions t ON t.tag_id = s.tag_id
+          WHERE s.id = ${id}
+        `;
+
+        try {
+          const response = await db.getFirstAsync<Saving>(query);
+          return response!;
+        } catch (error) {
+          throw error;
+        }
+    }
+
     async function getMonthTransactions(): Promise<Transaction[]> {
         const query = `
           SELECT t.id,t.value,t.desc,t.date,t.wallet_id, w.name AS wallet_name, t.tag_id, g.name AS tag_name, g.icon AS tag_icon
@@ -374,6 +391,14 @@ export function useDatabase(){
       }
     }
 
+    async function updateSaving(id: number, newGoal: number) {
+      try {
+        await db.execAsync(`UPDATE savings SET goal = '${newGoal}' WHERE id = ${id}`);
+      } catch (error) {
+        throw error;
+      }
+    }
+
     async function deleteWallet(id: number) {
       try {
         await db.execAsync(`DELETE FROM transactions WHERE wallet_id = ${id}`);
@@ -397,6 +422,7 @@ export function useDatabase(){
     return {
         getWallet,
         getBudget,
+        getSaving,
         getMonthTransactions,
         getRecentTransactions,
         getBudgetCount,
@@ -417,6 +443,7 @@ export function useDatabase(){
         updateWallet,
         updateTag,
         updateBudget,
+        updateSaving,
         deleteWallet,
         deleteTag,
     };
