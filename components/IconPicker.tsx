@@ -28,6 +28,7 @@ const ICONS = [
   { name: "church", label: "Church" },
   { name: "building-columns", label: "Taxes" },
   { name: "spray-can-sparkles", label: "Beauty" },
+  { name: "arrow-right-arrow-left", label: "Transfer"}
 ];
 
 export default function IconPicker({ selectedIcon, onSelect }: Props) {
