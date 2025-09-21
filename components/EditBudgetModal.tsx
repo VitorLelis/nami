@@ -14,7 +14,7 @@ interface Props {
 export default function EditBudgetModal({ budget, visible, onClose }: Props) {
   const [tagName, setTagName] = useState(budget?.tag_name ??'');
   const [tagIcon, setTagIcon] = useState(budget?.tag_icon ?? 'tag');
-  const [limitInput, setLimitInput] = useState(budget?.limit_amount.toString ?? '');
+  const [limitInput, setLimitInput] = useState(budget?.limit_amount.toString() ?? '');
 
   const db = useDatabase();
 

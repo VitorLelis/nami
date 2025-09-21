@@ -54,6 +54,8 @@ export default function BudgetInfoScreen() {
 
   return (
     <ScreenContainer>
+
+      {editVisible && budget && (
       <EditBudgetModal 
         budget={budget!} 
         visible={editVisible} 
@@ -61,6 +63,7 @@ export default function BudgetInfoScreen() {
             setEditVisible(false);
             getBudgetInfo();
         }}/>
+      )}
 
       <MessageModal 
         visible={deleteVisible}
