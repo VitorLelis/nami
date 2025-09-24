@@ -1,19 +1,21 @@
-import { Transaction } from "@/db/useDatabase";
-import React from "react";
+import { Transaction, useDatabase } from "@/db/useDatabase";
+import React, { useState } from "react";
 import { Text,View } from "./Themed";
-import { FlatList, StyleSheet } from "react-native";
+import { Alert, FlatList, StyleSheet } from "react-native";
 import TransactionCard from "./TransactionCard";
 import Colors from "@/constants/Colors";
 import toMoney from "@/utils/toMoney";
+import MessageModal from "./MessageModal";
+import { router } from "expo-router";
 
 type Props = {
   transactions: Transaction[];
   title: string;
   balance: number;
-  onEdit: (id: number) => void;
   onDelete: (id: number) => void;
 };
-export default function TransactionMonth({ transactions, title, balance, onEdit, onDelete }: Props) {
+
+export default function TransactionMonth({ transactions, title, balance, onDelete }: Props) { 
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -28,7 +30,7 @@ export default function TransactionMonth({ transactions, title, balance, onEdit,
         keyExtractor={(item) => item.id.toString()}
         scrollEnabled={false}
         renderItem={({ item }) => (
-          <TransactionCard transaction={item} onEdit={onEdit} onDelete={onDelete} />
+          <TransactionCard transaction={item} onDelete={onDelete}/>
         )}
         contentContainerStyle={{ paddingBottom: 20 }}
       />

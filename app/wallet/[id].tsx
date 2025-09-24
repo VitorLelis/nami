@@ -17,6 +17,8 @@ export default function WalletInfoScreen() {
     const [transactionList,setTransactionList] = useState<Transaction[]>([])
     const [editVisible,setEditVisible] = useState(false)
     const [deleteVisible,setDeleteVisible] = useState(false)
+    const [deleteTransaction,setDeleteTransaction] = useState(false)
+    const [deletePick, setDeletePick] = useState<number>()
 
   const db = useDatabase();
   const params = useLocalSearchParams<{ id: string }>();
@@ -37,6 +39,16 @@ export default function WalletInfoScreen() {
     }
     setDeleteVisible(false)
     router.back()
+  }
+
+  async function handleDeleteTransaction() {
+    try {
+      await db.deleteTransaction(deletePick!)
+    } catch (error) {
+      Alert.alert('Error', String(error));
+    }
+    getWalletInfo()
+    setDeleteTransaction(false)
   }
 
   useEffect(() => {
@@ -72,6 +84,14 @@ export default function WalletInfoScreen() {
         onClose={() => setDeleteVisible(false)}
       />
 
+      <MessageModal 
+        visible={deleteTransaction}
+        message='DELETE THE TRANSACTION?'
+        buttonText='DELETE'
+        onPress={handleDeleteTransaction}
+        onClose={() => setDeleteTransaction(false)}
+      />
+
       <ScreenTitle title={wallet?.name ?? "Loading..."} subtitle='Wallet history'/>
 
       <EditDeleteRow 
@@ -89,8 +109,7 @@ export default function WalletInfoScreen() {
             title={formatMonth(month)}
             transactions={transactions}
             balance={balance}
-            onEdit={() => console.log("edit")}
-            onDelete={() => console.log("delete")}
+            onDelete={(id)=> {setDeletePick(id);setDeleteTransaction(true)}}
           />
         )}
       />

@@ -6,14 +6,14 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Colors from "@/constants/Colors";
 import toMoney from "@/utils/toMoney";
 import { formatDate } from "@/utils/dateFormat";
+import { router } from "expo-router";
 
 type Props = {
   transaction: Transaction;
-  onEdit: (id: number) => void;
-  onDelete: (id: number) => void;
+  onDelete: (id:number) => void
 };
 
-export default function TransactionCard({ transaction, onEdit, onDelete }: Props) {
+export default function TransactionCard({ transaction, onDelete }: Props) {
   return (
     <View style={styles.card}>
       <View style={styles.leftSection}>
@@ -33,7 +33,7 @@ export default function TransactionCard({ transaction, onEdit, onDelete }: Props
           {toMoney(transaction.value)}
         </Text>
         <View style={styles.actions}>
-          <TouchableOpacity onPress={() => onEdit(transaction.id)} style={styles.actionBtn}>
+          <TouchableOpacity onPress={() => {router.navigate(`/edit-transaction/${transaction.id}`)}} style={styles.actionBtn}>
             <FontAwesome6 name="edit" size={16} color={Colors.lightGray} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => onDelete(transaction.id)} style={styles.actionBtn}>

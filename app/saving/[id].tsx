@@ -17,6 +17,8 @@ export default function SavingInfoScreen() {
     const [transactionList,setTransactionList] = useState<Transaction[]>([])
     const [editVisible,setEditVisible] = useState(false)
     const [deleteVisible,setDeleteVisible] = useState(false)
+    const [deleteTransaction,setDeleteTransaction] = useState(false)
+    const [deletePick, setDeletePick] = useState<number>()
 
   const db = useDatabase();
   const params = useLocalSearchParams<{ id: string }>();
@@ -37,6 +39,16 @@ export default function SavingInfoScreen() {
     }
     setDeleteVisible(false)
     router.back()
+  }
+
+  async function handleDeleteTransaction() {
+    try {
+      await db.deleteTransaction(deletePick!)
+    } catch (error) {
+      Alert.alert('Error', String(error));
+    }
+    getSavingInfo()
+    setDeleteTransaction(false)
   }
 
   useEffect(() => {
@@ -65,6 +77,15 @@ export default function SavingInfoScreen() {
         }}/>
     )}
 
+
+      <MessageModal 
+        visible={deleteTransaction}
+        message='DELETE THE TRANSACTION?'
+        buttonText='DELETE'
+        onPress={handleDelete}
+        onClose={() => setDeleteTransaction(false)}
+      />
+
       <MessageModal 
         visible={deleteVisible}
         message='DELETE THE SAVING?'
@@ -90,8 +111,7 @@ export default function SavingInfoScreen() {
             title={formatMonth(month)}
             transactions={transactions}
             balance={Math.abs(balance)}
-            onEdit={() => console.log("edit")}
-            onDelete={() => console.log("delete")}
+            onDelete={(id)=> {setDeletePick(id);setDeleteTransaction(true)}}
           />
         )}
       />

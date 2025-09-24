@@ -65,6 +65,21 @@ export function useDatabase(){
         }
     }
 
+    async function getTag(id: number) {
+      const query = `
+          SELECT id, name, icon
+          FROM tags
+          WHERE id = ${id}
+        `;
+
+        try {
+          const response = await db.getFirstAsync<Tag>(query);
+          return response!;
+        } catch (error) {
+          throw error;
+        }
+    }
+
     async function getBudget(id: number) {
       const query = `
           SELECT b.id, b.limit_amount,b.tag_id, g.name AS tag_name, g.icon AS tag_icon, IFNULL(SUM(t.value),0) AS spent
@@ -93,6 +108,23 @@ export function useDatabase(){
 
         try {
           const response = await db.getFirstAsync<Saving>(query);
+          return response!;
+        } catch (error) {
+          throw error;
+        }
+    }
+
+    async function getTransaction(id: number): Promise<Transaction> {
+        const query = `
+          SELECT t.id,t.value,t.desc,t.date,t.wallet_id, w.name AS wallet_name, t.tag_id, g.name AS tag_name, g.icon AS tag_icon
+          FROM transactions t
+          LEFT JOIN wallets w ON t.wallet_id = w.id
+          LEFT JOIN tags g ON t.tag_id = g.id
+          WHERE t.id = ${id}
+        `;
+
+        try {
+          const response = await db.getFirstAsync<Transaction>(query);
           return response!;
         } catch (error) {
           throw error;
@@ -399,6 +431,23 @@ export function useDatabase(){
       }
     }
 
+    async function updateTransaction(
+      id: number,
+      value:number,
+      desc: string,
+      date:string,
+      tag_id:number,
+      wallet_id:number) {
+
+      const query =
+        `UPDATE transactions SET value = ${value}, desc = '${desc}', date = '${date}', tag_id = ${tag_id}, wallet_id = ${wallet_id} WHERE id = ${id}`;
+      try {
+        await db.execAsync(query);
+      } catch (error) {
+        throw error;
+      }
+    }
+
     async function deleteWallet(id: number) {
       try {
         await db.execAsync(`DELETE FROM transactions WHERE wallet_id = ${id}`);
@@ -419,10 +468,20 @@ export function useDatabase(){
       }
     }
 
+    async function deleteTransaction(id: number) {
+      try {
+        await db.execAsync(`DELETE FROM transactions WHERE id = ${id}`);
+      } catch (error) {
+        throw error;
+      }
+    }
+
     return {
         getWallet,
+        getTag,
         getBudget,
         getSaving,
+        getTransaction,
         getMonthTransactions,
         getRecentTransactions,
         getBudgetCount,
@@ -444,8 +503,10 @@ export function useDatabase(){
         updateTag,
         updateBudget,
         updateSaving,
+        updateTransaction,
         deleteWallet,
         deleteTag,
+        deleteTransaction,
     };
 
 }
