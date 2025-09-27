@@ -1,16 +1,13 @@
 import React from 'react';
-import { StyleSheet, Alert, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Colors from '@/constants/Colors';
+import { router } from 'expo-router';
 
-export default function TransferMoneyButton() {
-  const handlePress = () => {
-    Alert.alert('Transfer Money', 'This will take to money transfer');
-  };
-
+export default function TransferMoneyButton() { 
   return (
-    <TouchableOpacity style={styles.card} onPress={handlePress}>
+    <TouchableOpacity style={styles.card} onPress={() => router.navigate("/transfer")}>
       <View style={styles.content}>
         <FontAwesome6 name="arrow-right-arrow-left" size={14} color={Colors.background} />
         <Text style={styles.text}>TRANSFER MONEY</Text>

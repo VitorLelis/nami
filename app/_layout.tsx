@@ -55,8 +55,9 @@ function RootLayoutNav() {
           <Stack.Screen name='budget/[id]' options={{ headerShown: false }}/>
           <Stack.Screen name='saving/[id]' options={{ headerShown: false }}/>
           <Stack.Screen name='wallet/[id]' options={{ headerShown: false }}/>
-          <Stack.Screen name='tags' options={{ headerShown: false }}/>
           <Stack.Screen name='edit-transaction/[id]' options={{ headerShown: false }}/>
+          <Stack.Screen name='tags' options={{ headerShown: false }}/>
+          <Stack.Screen name='transfer' options={{ headerShown: false }}/>
         </Stack>
       </ThemeProvider>
     </SQLiteProvider>
