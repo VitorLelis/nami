@@ -8,6 +8,7 @@ import PickTagModal from "./PickTagModal";
 import PickWalletModal from "./PickWalletModal";
 import RNDateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import MessageModal from "./MessageModal";
+import { parseNumber } from "@/utils/parseNumber";
 
 
 export default function AddTransactionInfo()  {
@@ -36,10 +37,11 @@ export default function AddTransactionInfo()  {
 
   async function handlePress() {
     try {
-      if (isNaN(Number(value))){
+      if (isNaN(parseNumber(value))){
         Alert.alert('Error', 'It must be a Number!');  
       }
-      const newValue = transactionType ==='expense'? -Number(value): Number(value)
+      const nValue = parseNumber(value)
+      const newValue = transactionType ==='expense'? -nValue: nValue
 
       await db.addTransaction(newValue,desc,formattedDate,tag!.id,wallet!.id)
 
@@ -118,7 +120,7 @@ export default function AddTransactionInfo()  {
           <Text style={styles.label}>Value</Text>
           <TextInput
             style={styles.input}
-            keyboardType="numeric"
+            keyboardType="decimal-pad"
             value={value}
             onChangeText={setValue}
             placeholder="0.00"

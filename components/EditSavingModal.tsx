@@ -59,7 +59,7 @@ export default function EditSavingModal({ saving, visible, onClose }: Props) {
             placeholder='Set the goal'
             placeholderTextColor={Colors.subtitle}
             onChangeText={setGoal}
-            keyboardType="numeric"
+            keyboardType="decimal-pad"
           />
 
           <IconPicker selectedIcon={tagIcon} onSelect={setTagIcon}/>

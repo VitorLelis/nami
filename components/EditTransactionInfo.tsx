@@ -9,6 +9,7 @@ import PickWalletModal from "./PickWalletModal";
 import RNDateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import MessageModal from "./MessageModal";
 import { router } from "expo-router";
+import { parseNumber } from "@/utils/parseNumber";
 
 interface Props {
   transaction: Transaction;
@@ -43,10 +44,11 @@ export default function EditTransactionInfo({ transaction, pickedWallet, pickedT
 
   async function handlePress() {
     try {
-      if (isNaN(Number(value))){
+      if (isNaN(parseNumber(value))){
         Alert.alert('Error', 'It must be a Number!');  
       }
-      const newValue = transactionType ==='expense'? -Number(value): Number(value)
+      const nValue = parseNumber(value)
+      const newValue = transactionType ==='expense'? -nValue: nValue
 
       await db.updateTransaction(transaction!.id,newValue,desc,formattedDate,tag!.id,wallet!.id)
 
@@ -116,7 +118,7 @@ export default function EditTransactionInfo({ transaction, pickedWallet, pickedT
           <Text style={styles.label}>Value</Text>
           <TextInput
             style={styles.input}
-            keyboardType="numeric"
+            keyboardType="decimal-pad"
             value={value}
             onChangeText={setValue}
             placeholder="0.00"

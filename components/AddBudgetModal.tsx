@@ -58,7 +58,7 @@ export default function AddBudgetModal({ visible, onClose }: Props) {
             placeholder='Set the limit'
             placeholderTextColor={Colors.subtitle}
             onChangeText={setLimitInput}
-            keyboardType="numeric"
+            keyboardType="decimal-pad"
           />
 
           <IconPicker selectedIcon={tagIcon} onSelect={setTagIcon}/>
