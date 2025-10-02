@@ -54,11 +54,11 @@ export function useDatabase(){
       const query = `
           SELECT id, name
           FROM wallets
-          WHERE id = ?
+          WHERE id = ${id}
         `;
 
         try {
-          const response = await db.getFirstAsync<Wallet>(query, [id]);
+          const response = await db.getFirstAsync<Wallet>(query);
           return response!;
         } catch (error) {
           throw error;
@@ -238,20 +238,22 @@ export function useDatabase(){
     }
 
     async function addBudget(tag_id: number,limit_amount:number) {
-      const query =
-        'INSERT INTO budgets (tag_id,limit_amount) VALUES (?,?)';
+      const query = await db.prepareAsync(
+        `INSERT INTO budgets (tag_id,limit_amount) VALUES (${tag_id},${limit_amount})`,
+      );
       try {
-        await db.getAllAsync(query, [tag_id,limit_amount]);
+        query.executeAsync();
       } catch (error) {
         throw error;
       }
     }
 
     async function addSaving(tag_id: number,goal:number) {
-      const query =
-        'INSERT INTO savings (tag_id,goal) VALUES (?,?)';
+      const query = await db.prepareAsync(
+        `INSERT INTO savings (tag_id,goal) VALUES (${tag_id},${goal})`,
+      );
       try {
-        await db.getAllAsync(query, [tag_id,goal]);
+        query.executeAsync();
       } catch (error) {
         throw error;
       }
@@ -369,12 +371,12 @@ export function useDatabase(){
           FROM transactions t
           LEFT JOIN wallets w ON t.wallet_id = w.id
           LEFT JOIN tags g ON t.tag_id = g.id
-          WHERE t.wallet_id = ?
+          WHERE t.wallet_id = ${wallet_id}
           ORDER BY t.date DESC
         `;
 
         try {
-          const rows = await db.getAllAsync<Transaction>(query,wallet_id);
+          const rows = await db.getAllAsync<Transaction>(query);
           return rows;
         } catch (error) {
           throw error;
