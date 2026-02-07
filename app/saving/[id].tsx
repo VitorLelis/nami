@@ -82,7 +82,7 @@ export default function SavingInfoScreen() {
         visible={deleteTransaction}
         message='DELETE THE TRANSACTION?'
         buttonText='DELETE'
-        onPress={handleDelete}
+        onPress={handleDeleteTransaction}
         onClose={() => setDeleteTransaction(false)}
       />
 
