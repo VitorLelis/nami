@@ -13,6 +13,7 @@ export default function WalletScreen() {
   const [addWalletVisible,setAddWalletVisible] = useState(false);
   const [totalBalance,setTotalBalance] = useState(0);
   const [walletList,setWalletList] = useState<WalletBalance[]>([]);
+  const [selectedWallets, setSelectedWallets] = useState<number[]>([]);
 
   const db = useDatabase();
 
@@ -20,10 +21,31 @@ export default function WalletScreen() {
     const wallets = await db.getWalletBalanceList();
     setWalletList(wallets)
 
+    const ids = wallets.map(w => w.id); // all selected by default
+    setSelectedWallets(ids);
+
     const sum: number = wallets.reduce(
       (acc:number,current:WalletBalance) => acc + current.balance,0)
     
     setTotalBalance(sum)
+  }
+
+  function toggleWallet(id: number) {
+    let updated: number[];
+
+    if (selectedWallets.includes(id)) {
+      updated = selectedWallets.filter(w => w !== id);
+    } else {
+      updated = [...selectedWallets, id];
+    }
+
+    setSelectedWallets(updated);
+
+    const newTotal = walletList
+      .filter(w => updated.includes(w.id))
+      .reduce((acc, w) => acc + w.balance, 0);
+
+    setTotalBalance(newTotal);
   }
 
   useEffect(() => {
@@ -49,7 +71,11 @@ export default function WalletScreen() {
           getWallets()}
         }/>
 
-      <WalletList wallets={walletList}/>
+      <WalletList
+        wallets={walletList}
+        selectedWallets={selectedWallets}
+        onToggle={toggleWallet}
+      />
     </ScreenContainer>
   );
 }

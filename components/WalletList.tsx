@@ -6,18 +6,22 @@ import { router } from 'expo-router';
 
 type WalletListProps = {
   wallets: WalletBalance[];
+  selectedWallets: number[];
+  onToggle: (id: number) => void;
 };
 
-export default function WalletList({ wallets }: WalletListProps) {
+export default function WalletList({ wallets, selectedWallets, onToggle }: WalletListProps) {
   return (
     <FlatList
       data={wallets}
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
-        <Pressable onPress={() => router.navigate(`/wallet/${item.id}`)}>
-          <WalletCard name={item.name} amount={item.balance} />
-        </Pressable>
-        
+        <WalletCard
+          name={item.name}
+          amount={item.balance}
+          checked={selectedWallets.includes(item.id)}
+          onToggle={() => onToggle(item.id)}
+        />
       )}
       contentContainerStyle={styles.list}
       showsVerticalScrollIndicator={false}

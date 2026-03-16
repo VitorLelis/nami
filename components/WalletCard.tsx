@@ -1,23 +1,36 @@
 import React from 'react';
-import { StyleSheet} from 'react-native';
+import { StyleSheet, Pressable} from 'react-native';
 import { Text, View } from '@/components/Themed';
 import Colors from '@/constants/Colors';
 import toMoney from '@/utils/toMoney';
+import { FontAwesome6 } from '@expo/vector-icons';
+
 
 type WalletCardProps = {
   name: string;
   amount: number;
+  checked: boolean;
+  onToggle: () => void;
 };
 
-export default function WalletCard({ name, amount }: WalletCardProps) {
+export default function WalletCard({ name, amount, checked, onToggle }: WalletCardProps) {
   const isNegative = amount < 0;
 
   return (
     <View style={styles.card}>
-      {/* Wallet Name */}
-      <Text style={styles.name}>{name}</Text>
+      
+      <View style={styles.left}>
+        <Pressable onPress={onToggle} style={styles.checkbox}>
+          <FontAwesome6
+            name={checked ? "square-check" : "square"}
+            size={22}
+            color={Colors.defaultYellow}
+          />
+        </Pressable>
+    
+        <Text style={styles.name}>{name}</Text>
+      </View>
 
-      {/* Right Side */}
       <View style={styles.right}>
         <Text
           style={[
@@ -51,5 +64,14 @@ const styles = StyleSheet.create({
   amount: {
     fontSize: 16,
     fontWeight: '600',
+  },
+  checkbox: {
+    marginRight: 2,
+    justifyContent: 'center',
+  },
+  left: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
   },
 });
