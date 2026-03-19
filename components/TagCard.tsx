@@ -1,33 +1,20 @@
 import React from "react";
 import { Text, View } from "./Themed";
-import { TouchableOpacity, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { Tag } from "@/db/useDatabase";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Colors from "@/constants/Colors";
 
 type Props = {
   tag: Tag;
-  onEdit: (id: number) => void;
-  onDelete: (id: number) => void;
 };
 
-export default function TagCard({ tag, onEdit, onDelete }: Props) {
+export default function TagCard({ tag }: Props) {
   return (
     <View style={styles.card}>
       <View style={styles.leftSection}>
           <FontAwesome6 name={tag.icon} size={18} color={Colors.text} />
           <Text style={styles.textContainer}>{tag.name}</Text>
-      </View>
-
-      <View style={styles.rightSection}>
-        <View style={styles.actions}>
-          <TouchableOpacity onPress={() => onEdit(tag.id)} style={styles.actionBtn}>
-            <FontAwesome6 name="edit" size={16} color={Colors.lightGray} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => onDelete(tag.id)} style={styles.actionBtn}>
-            <FontAwesome6 name="trash-can" size={16} color={Colors.lightGray} />
-          </TouchableOpacity>
-        </View>
       </View>
     </View>
   );
@@ -53,16 +40,5 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: "600",
     fontSize: 18,
-  },
-  rightSection: {
-    alignItems: "flex-end",
-  },
-  actions: {
-    flexDirection: "row",
-    marginTop: 4,
-  },
-  actionBtn: {
-    marginLeft: 10,
-    padding: 4,
   },
 });
