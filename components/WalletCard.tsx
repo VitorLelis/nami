@@ -4,17 +4,18 @@ import { Text, View } from '@/components/Themed';
 import Colors from '@/constants/Colors';
 import toMoney from '@/utils/toMoney';
 import { FontAwesome6 } from '@expo/vector-icons';
+import { WalletBalance } from '@/db/useDatabase';
+import { router } from 'expo-router';
 
 
 type WalletCardProps = {
-  name: string;
-  amount: number;
+  walletBalance: WalletBalance
   checked: boolean;
   onToggle: () => void;
 };
 
-export default function WalletCard({ name, amount, checked, onToggle }: WalletCardProps) {
-  const isNegative = amount < 0;
+export default function WalletCard({ walletBalance, checked, onToggle }: WalletCardProps) {
+  const isNegative = walletBalance.balance < 0;
 
   return (
     <View style={styles.card}>
@@ -28,7 +29,9 @@ export default function WalletCard({ name, amount, checked, onToggle }: WalletCa
           />
         </Pressable>
     
-        <Text style={styles.name}>{name}</Text>
+        <Pressable onPress={() => router.navigate(`/wallet/${walletBalance.id}`)}>
+          <Text style={styles.name}>{walletBalance.name}</Text>
+        </Pressable>
       </View>
 
       <View style={styles.right}>
@@ -38,7 +41,7 @@ export default function WalletCard({ name, amount, checked, onToggle }: WalletCa
             { color: isNegative ? Colors.expense : Colors.income },
           ]}
         >
-          {toMoney(amount)}
+          {toMoney(walletBalance.balance)}
         </Text>
       </View>
     </View>

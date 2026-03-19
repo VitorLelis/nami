@@ -17,8 +17,7 @@ export default function WalletList({ wallets, selectedWallets, onToggle }: Walle
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
         <WalletCard
-          name={item.name}
-          amount={item.balance}
+          walletBalance={item}
           checked={selectedWallets.includes(item.id)}
           onToggle={() => onToggle(item.id)}
         />
