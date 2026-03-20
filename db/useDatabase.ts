@@ -149,6 +149,23 @@ export function useDatabase(){
         }
     }
 
+    async function getAllTransactions(): Promise<Transaction[]> {
+        const query = `
+          SELECT t.id,t.value,t.desc,t.date, t.wallet_id, w.name AS wallet_name, t.tag_id, g.name AS tag_name, g.icon AS tag_icon
+          FROM transactions t
+          LEFT JOIN wallets w ON t.wallet_id = w.id
+          LEFT JOIN tags g ON t.tag_id = g.id
+          ORDER BY t.date DESC
+        `;
+
+        try {
+          const rows = await db.getAllAsync<Transaction>(query);
+          return rows;
+        } catch (error) {
+          throw error;
+        }
+    }
+
     async function getRecentTransactions(): Promise<Transaction[]> {
         const query = `
           SELECT t.id,t.value,t.desc,t.date, t.wallet_id, w.name AS wallet_name, t.tag_id, g.name AS tag_name, g.icon AS tag_icon
@@ -485,6 +502,7 @@ export function useDatabase(){
         getSaving,
         getTransaction,
         getMonthTransactions,
+        getAllTransactions,
         getRecentTransactions,
         getBudgetCount,
         getWalletCount,

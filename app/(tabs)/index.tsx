@@ -5,7 +5,7 @@ import IncomeExpenseRow from '@/components/IncomeExpenseRow';
 import OverviewCards from '@/components/OverviewCards';
 import RecentTransactions from '@/components/RecentTransactions';
 import { useEffect, useState } from 'react';
-import { Alert } from 'react-native';
+import { Alert, Pressable } from 'react-native';
 import { Transaction, useDatabase } from '@/db/useDatabase';
 import { router, useFocusEffect } from 'expo-router';
 import React from 'react';
@@ -73,7 +73,9 @@ export default function IndexScreen() {
       <IncomeExpenseRow income={monthIncome} expense={monthExpense}/>
       <OverviewCards budgets={budgetCount} wallets={walletCount} goals={savingsCount} />
       <TagButton onPress={()=> router.navigate("/tags")}/>
-      <RecentTransactions recentTransactions={recentTransactions}/>
+      <Pressable onPress={() => router.navigate(`/all-transactions`)}>
+        <RecentTransactions recentTransactions={recentTransactions}/>
+      </Pressable>
     </ScreenContainer>
   );
 }

@@ -59,6 +59,7 @@ function RootLayoutNav() {
           <Stack.Screen name='edit-transaction/[id]' options={{ headerShown: false }}/>
           <Stack.Screen name='tags' options={{ headerShown: false }}/>
           <Stack.Screen name='transfer' options={{ headerShown: false }}/>
+          <Stack.Screen name='all-transactions' options={{ headerShown: false }}/>
         </Stack>
       </ThemeProvider>
     </SQLiteProvider>
