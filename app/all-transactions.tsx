@@ -67,7 +67,7 @@ export default function AllTransactionsScreen() {
           <TransactionMonth
             title={formatMonth(month)}
             transactions={transactions}
-            balance={Math.abs(balance)}
+            balance={balance}
             onDelete={(id)=> {setDeletePick(id);setDeleteTransaction(true)}}
           />
         )}
